@@ -1,0 +1,2631 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="images/logo.ico">
+        <title>Recipes - Crave And Cook</title>
+        <style>
+            /* Star Rating Styles */
+            .star-rating {
+                display: inline-flex;
+                align-items: center;
+                gap: 2px;
+                margin: 8px 0;
+            }
+            
+            .star {
+                cursor: pointer;
+                font-size: 18px;
+                color: #ddd;
+                transition: color 0.2s ease;
+            }
+            
+            .star:hover,
+            .star.active {
+                color: #ffd700;
+            }
+            
+            .star.filled {
+                color: #ffd700;
+            }
+            
+            .rating-text {
+                margin-left: 8px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .user-rating {
+                font-weight: bold;
+                color: #333;
+            }
+
+            /* Review Styles */
+            .review-section {
+                margin-top: 10px;
+                display: none;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 15px;
+                background-color: #fafafa;
+            }
+
+            .review-section.show {
+                display: block;
+            }
+
+            .write-review-btn {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                margin-top: 8px;
+                transition: background-color 0.2s ease;
+            }
+
+            .write-review-btn:hover {
+                background-color: #218838;
+            }
+
+            .review-textarea {
+                width: 100%;
+                min-height: 60px;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-family: inherit;
+                font-size: 14px;
+                resize: vertical;
+                margin-bottom: 8px;
+            }
+
+            .review-textarea:focus {
+                outline: none;
+                border-color: #007bff;
+                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            }
+
+            .save-review-btn {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.2s ease;
+            }
+
+            .save-review-btn:hover {
+                background-color: #0056b3;
+            }
+
+            .edit-review-btn {
+                background-color: #ffc107;
+                color: #212529;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                margin-top: 8px;
+                transition: background-color 0.2s ease;
+            }
+
+            .edit-review-btn:hover {
+                background-color: #e0a800;
+            }
+
+            .cancel-edit-btn {
+                background-color: #6c757d;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                margin-left: 8px;
+                transition: background-color 0.2s ease;
+            }
+
+            .cancel-edit-btn:hover {
+                background-color: #5a6268;
+            }
+
+            .remove-review-btn {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                margin-left: 8px;
+                transition: background-color 0.2s ease;
+            }
+
+            .remove-review-btn:hover {
+                background-color: #c82333;
+            }
+
+            .user-review {
+                background-color: #f8f9fa;
+                padding: 8px 12px;
+                border-radius: 4px;
+                margin-top: 8px;
+                font-size: 14px;
+                line-height: 1.4;
+                border-left: 3px solid #007bff;
+            }
+
+            .review-label {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 4px;
+                display: block;
+            }
+
+            /* Filter Controls Styles */
+            .filter-controls {
+                display: flex;
+                gap: 1rem;
+                margin: 2rem 0 1rem 0;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .filter-controls select {
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+                background-color: white;
+                cursor: pointer;
+                min-width: 150px;
+            }
+
+            .filter-controls select:focus {
+                outline: none;
+                border-color: #007bff;
+                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            }
+
+            .filter-controls select:hover {
+                border-color: #007bff;
+            }
+
+            /* Modal Review Styles */
+            .modal-review-section {
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid #e0e0e0;
+            }
+
+            .modal-review-section h3 {
+                margin-bottom: 15px;
+                color: #333;
+            }
+
+            .modal-star-rating {
+                margin-bottom: 20px;
+            }
+
+            .modal-review-content {
+                margin-top: 15px;
+            }
+
+            .modal-review-content .review-section {
+                margin-top: 0;
+                border: none;
+                padding: 0;
+                background-color: transparent;
+            }
+
+            .modal-review-content .review-section.show {
+                display: block;
+            }
+
+            /* Bookmark/Heart Icon Styles */
+            .bookmark-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                z-index: 10;
+            }
+
+            .bookmark-btn:hover {
+                background: rgba(255, 255, 255, 1);
+                transform: scale(1.1);
+            }
+
+            .bookmark-btn .heart-icon {
+                font-size: 20px;
+                color: #ccc;
+                transition: color 0.3s ease;
+            }
+
+            .bookmark-btn.bookmarked .heart-icon {
+                color: #e74c3c;
+            }
+
+            .bookmark-btn:hover .heart-icon {
+                color: #e74c3c;
+            }
+
+            /* Recipe Card Position */
+            .recipe-card {
+                position: relative;
+            }
+
+            /* Favorites Section Styles */
+            .favorites-section {
+                margin: 2rem 0;
+                padding: 2rem;
+                background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+                border-radius: 12px;
+                border: 1px solid #ffebee;
+            }
+
+            .favorites-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 1.5rem;
+            }
+
+            .favorites-header h2 {
+                color: #d32f2f;
+                margin: 0;
+            }
+
+            .favorites-header .heart-icon {
+                font-size: 24px;
+                color: #e74c3c;
+            }
+
+            .favorites-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .no-favorites {
+                text-align: center;
+                color: #666;
+                font-style: italic;
+                padding: 2rem;
+            }
+
+            /* Favorites Toggle Button */
+            .favorites-toggle {
+                background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin: 1rem 0;
+            }
+
+            .favorites-toggle:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+            }
+
+            .favorites-toggle .heart-icon {
+                font-size: 16px;
+            }
+
+            /* Countdown Timer Styles */
+            .timer-section {
+                margin: 20px 0;
+                padding: 20px;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                border-radius: 12px;
+                border: 1px solid #dee2e6;
+            }
+
+            .timer-section h3 {
+                margin-bottom: 15px;
+                color: #333;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .timer-display {
+                font-size: 2.5rem;
+                font-weight: bold;
+                text-align: center;
+                color: #28a745;
+                margin: 15px 0;
+                font-family: 'Courier New', monospace;
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                border: 2px solid #dee2e6;
+            }
+
+            .timer-display.warning {
+                color: #ffc107;
+            }
+
+            .timer-display.danger {
+                color: #dc3545;
+                animation: pulse 1s infinite;
+            }
+
+            @keyframes pulse {
+                0% { opacity: 1; }
+                50% { opacity: 0.7; }
+                100% { opacity: 1; }
+            }
+
+            .timer-controls {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .timer-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                min-width: 80px;
+            }
+
+            .timer-btn.start {
+                background-color: #28a745;
+                color: white;
+            }
+
+            .timer-btn.start:hover {
+                background-color: #218838;
+                transform: translateY(-2px);
+            }
+
+            .timer-btn.pause {
+                background-color: #ffc107;
+                color: #212529;
+            }
+
+            .timer-btn.pause:hover {
+                background-color: #e0a800;
+                transform: translateY(-2px);
+            }
+
+            .timer-btn.reset {
+                background-color: #6c757d;
+                color: white;
+            }
+
+            .timer-btn.reset:hover {
+                background-color: #5a6268;
+                transform: translateY(-2px);
+            }
+
+            .timer-btn:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+
+            .timer-status {
+                text-align: center;
+                margin-top: 10px;
+                font-size: 14px;
+                color: #666;
+                font-style: italic;
+            }
+
+            .timer-icon {
+                font-size: 18px;
+            }
+
+            /* Mobile Menu Icon */
+            .menu-icon {
+                display: none;
+                cursor: pointer;
+                font-size: 1.5rem;
+                color: #333;
+                transition: color 0.3s ease;
+            }
+
+            .menu-icon:hover {
+                color: #ff6b6b;
+            }
+
+            /* Responsive Design - Media Queries */
+            
+            /* Large Desktop Screens (1200px and above) */
+            @media (min-width: 1200px) {
+                .container {
+                    max-width: 1200px;
+                }
+                
+                .recipe-section {
+                    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                }
+                
+                .favorites-container {
+                    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                }
+            }
+
+            /* Desktop Screens (992px to 1199px) */
+            @media (max-width: 1199px) and (min-width: 992px) {
+                .recipe-section {
+                    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                }
+                
+                .favorites-container {
+                    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                }
+            }
+
+            /* Tablet Screens (768px to 991px) */
+            @media (max-width: 991px) and (min-width: 768px) {
+                .container {
+                    padding: 0 20px;
+                }
+                
+                .hero-section h2 {
+                    font-size: 2.5rem;
+                }
+                
+                .hero-section p {
+                    font-size: 1.1rem;
+                }
+                
+                .search-box {
+                    max-width: 500px;
+                }
+                
+                .recipe-section {
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                    gap: 1.5rem;
+                }
+                
+                .favorites-container {
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                }
+                
+                .filter-controls {
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                
+                .filter-controls select {
+                    min-width: 200px;
+                }
+                
+                .modal-content {
+                    width: 90%;
+                    max-width: 700px;
+                    margin: 5% auto;
+                }
+                
+                .timer-display {
+                    font-size: 2rem;
+                }
+                
+                .timer-controls {
+                    gap: 8px;
+                }
+                
+                .timer-btn {
+                    padding: 8px 16px;
+                    font-size: 13px;
+                }
+            }
+
+            /* Mobile Screens (481px to 767px) */
+            @media (max-width: 767px) and (min-width: 481px) {
+                .container {
+                    padding: 0 15px;
+                }
+                
+                .logo {
+                    font-size: 1.5rem;
+                }
+                
+                .nav-list {
+                    position: fixed;
+                    top: 70px;
+                    left: -100%;
+                    width: 100%;
+                    height: calc(100vh - 70px);
+                    background: rgba(0, 0, 0, 0.95);
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-top: 2rem;
+                    transition: left 0.3s ease;
+                    z-index: 1000;
+                }
+                
+                .nav-list.active {
+                    left: 0;
+                }
+                
+                .nav-list li {
+                    margin: 1rem 0;
+                }
+                
+                .nav-list a {
+                    font-size: 1.2rem;
+                    padding: 1rem 2rem;
+                }
+                
+                .menu-icon {
+                    display: block;
+                    font-size: 1.5rem;
+                }
+                
+                .hero-section h2 {
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                }
+                
+                .hero-section p {
+                    font-size: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+                
+                .search-box {
+                    max-width: 100%;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                
+                .search-box input {
+                    width: 100%;
+                    padding: 12px 16px;
+                    font-size: 16px;
+                }
+                
+                .search-box button {
+                    width: 100%;
+                    padding: 12px 16px;
+                    font-size: 16px;
+                }
+                
+                .recipe-section {
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 1rem;
+                }
+                
+                .favorites-container {
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                }
+                
+                .recipe-card {
+                    border-radius: 8px;
+                }
+                
+                .recipe-card img {
+                    height: 180px;
+                }
+                
+                .recipe-info h2 {
+                    font-size: 1.1rem;
+                }
+                
+                .recipe-info p {
+                    font-size: 0.9rem;
+                }
+                
+                .filter-controls {
+                    flex-direction: column;
+                    gap: 0.8rem;
+                    margin: 1.5rem 0 1rem 0;
+                }
+                
+                .filter-controls select {
+                    width: 100%;
+                    min-width: auto;
+                    padding: 10px 12px;
+                    font-size: 16px;
+                }
+                
+                .favorites-toggle {
+                    width: 100%;
+                    justify-content: center;
+                    padding: 12px 20px;
+                    font-size: 16px;
+                }
+                
+                .favorites-section {
+                    margin: 1.5rem 0;
+                    padding: 1.5rem;
+                }
+                
+                .favorites-header h2 {
+                    font-size: 1.3rem;
+                }
+                
+                .modal-content {
+                    width: 95%;
+                    margin: 2% auto;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                }
+                
+                .modal-header h2 {
+                    font-size: 1.5rem;
+                }
+                
+                .modal-header img {
+                    height: 200px;
+                }
+                
+                .timer-section {
+                    margin: 15px 0;
+                    padding: 15px;
+                }
+                
+                .timer-section h3 {
+                    font-size: 1.1rem;
+                }
+                
+                .timer-display {
+                    font-size: 1.8rem;
+                    padding: 12px;
+                }
+                
+                .timer-controls {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+                
+                .timer-btn {
+                    width: 100%;
+                    padding: 12px 16px;
+                    font-size: 16px;
+                }
+                
+                .star-rating {
+                    gap: 1px;
+                }
+                
+                .star {
+                    font-size: 16px;
+                }
+                
+                .rating-text {
+                    font-size: 12px;
+                }
+                
+                .review-section {
+                    padding: 12px;
+                }
+                
+                .review-textarea {
+                    font-size: 16px;
+                    padding: 10px;
+                }
+                
+                .write-review-btn,
+                .save-review-btn,
+                .edit-review-btn,
+                .remove-review-btn,
+                .cancel-edit-btn {
+                    padding: 8px 12px;
+                    font-size: 14px;
+                    width: 100%;
+                    margin-top: 8px;
+                    margin-left: 0;
+                }
+                
+                .user-review {
+                    padding: 10px;
+                    font-size: 14px;
+                }
+                
+                .review-label {
+                    font-size: 0.9rem;
+                }
+                
+                .bookmark-btn {
+                    width: 35px;
+                    height: 35px;
+                }
+                
+                .bookmark-btn .heart-icon {
+                    font-size: 18px;
+                }
+            }
+
+            /* Small Mobile Screens (320px to 480px) */
+            @media (max-width: 480px) {
+                .container {
+                    padding: 0 10px;
+                }
+                
+                .logo {
+                    font-size: 1.3rem;
+                }
+                
+                .nav-list {
+                    position: fixed;
+                    top: 60px;
+                    left: -100%;
+                    width: 100%;
+                    height: calc(100vh - 60px);
+                    background: rgba(0, 0, 0, 0.95);
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-top: 2rem;
+                    transition: left 0.3s ease;
+                    z-index: 1000;
+                }
+                
+                .nav-list.active {
+                    left: 0;
+                }
+                
+                .nav-list li {
+                    margin: 0.8rem 0;
+                }
+                
+                .nav-list a {
+                    font-size: 1.1rem;
+                    padding: 0.8rem 1.5rem;
+                }
+                
+                .menu-icon {
+                    display: block;
+                    font-size: 1.3rem;
+                }
+                
+                .hero-section {
+                    padding: 2rem 1rem;
+                }
+                
+                .hero-section h2 {
+                    font-size: 1.8rem;
+                    margin-bottom: 0.8rem;
+                }
+                
+                .hero-section p {
+                    font-size: 0.9rem;
+                    margin-bottom: 1.2rem;
+                }
+                
+                .search-box {
+                    max-width: 100%;
+                    flex-direction: column;
+                    gap: 0.8rem;
+                }
+                
+                .search-box input {
+                    width: 100%;
+                    padding: 10px 14px;
+                    font-size: 16px;
+                }
+                
+                .search-box button {
+                    width: 100%;
+                    padding: 10px 14px;
+                    font-size: 16px;
+                }
+                
+                .recipes h1 {
+                    font-size: 1.8rem;
+                    margin: 1.5rem 0 1rem 0;
+                }
+                
+                .recipe-section {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+                }
+                
+                .favorites-container {
+                    grid-template-columns: 1fr;
+                }
+                
+                .recipe-card {
+                    border-radius: 6px;
+                }
+                
+                .recipe-card img {
+                    height: 160px;
+                }
+                
+                .recipe-info {
+                    padding: 12px;
+                }
+                
+                .recipe-info h2 {
+                    font-size: 1rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .recipe-info p {
+                    font-size: 0.85rem;
+                    line-height: 1.4;
+                }
+                
+                .recipe-category,
+                .recipe-cooktime {
+                    font-size: 0.75rem;
+                    padding: 3px 8px;
+                }
+                
+                .view-recipe {
+                    padding: 8px 16px;
+                    font-size: 0.9rem;
+                }
+                
+                .filter-controls {
+                    flex-direction: column;
+                    gap: 0.6rem;
+                    margin: 1.2rem 0 0.8rem 0;
+                }
+                
+                .filter-controls select {
+                    width: 100%;
+                    min-width: auto;
+                    padding: 8px 10px;
+                    font-size: 16px;
+                }
+                
+                .favorites-toggle {
+                    width: 100%;
+                    justify-content: center;
+                    padding: 10px 16px;
+                    font-size: 14px;
+                }
+                
+                .favorites-section {
+                    margin: 1.2rem 0;
+                    padding: 1.2rem;
+                }
+                
+                .favorites-header h2 {
+                    font-size: 1.2rem;
+                }
+                
+                .modal-content {
+                    width: 98%;
+                    margin: 1% auto;
+                    max-height: 95vh;
+                    overflow-y: auto;
+                }
+                
+                .modal-header h2 {
+                    font-size: 1.3rem;
+                }
+                
+                .modal-header img {
+                    height: 180px;
+                }
+                
+                .modal-body {
+                    padding: 15px;
+                }
+                
+                .recipe-details h3 {
+                    font-size: 1.1rem;
+                }
+                
+                .recipe-details ul,
+                .recipe-details ol {
+                    padding-left: 1.5rem;
+                }
+                
+                .recipe-details li {
+                    font-size: 0.9rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .timer-section {
+                    margin: 12px 0;
+                    padding: 12px;
+                }
+                
+                .timer-section h3 {
+                    font-size: 1rem;
+                }
+                
+                .timer-display {
+                    font-size: 1.5rem;
+                    padding: 10px;
+                }
+                
+                .timer-controls {
+                    flex-direction: column;
+                    gap: 6px;
+                }
+                
+                .timer-btn {
+                    width: 100%;
+                    padding: 10px 14px;
+                    font-size: 14px;
+                }
+                
+                .timer-status {
+                    font-size: 12px;
+                }
+                
+                .star-rating {
+                    gap: 1px;
+                }
+                
+                .star {
+                    font-size: 14px;
+                }
+                
+                .rating-text {
+                    font-size: 11px;
+                }
+                
+                .review-section {
+                    padding: 10px;
+                }
+                
+                .review-textarea {
+                    font-size: 16px;
+                    padding: 8px;
+                    min-height: 50px;
+                }
+                
+                .write-review-btn,
+                .save-review-btn,
+                .edit-review-btn,
+                .remove-review-btn,
+                .cancel-edit-btn {
+                    padding: 6px 10px;
+                    font-size: 13px;
+                    width: 100%;
+                    margin-top: 6px;
+                    margin-left: 0;
+                }
+                
+                .user-review {
+                    padding: 8px;
+                    font-size: 13px;
+                }
+                
+                .review-label {
+                    font-size: 0.9rem;
+                }
+                
+                .bookmark-btn {
+                    width: 30px;
+                    height: 30px;
+                    top: 8px;
+                    right: 8px;
+                }
+                
+                .bookmark-btn .heart-icon {
+                    font-size: 16px;
+                }
+                
+                .close-modal {
+                    font-size: 1.5rem;
+                    top: 10px;
+                    right: 15px;
+                }
+                
+                .no-results,
+                .no-favorites {
+                    font-size: 0.9rem;
+                    padding: 1rem;
+                }
+            }
+
+            /* Landscape Mobile Orientation */
+            @media (max-width: 767px) and (orientation: landscape) {
+                .hero-section {
+                    padding: 1.5rem 1rem;
+                }
+                
+                .hero-section h2 {
+                    font-size: 1.5rem;
+                }
+                
+                .recipe-section {
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                }
+                
+                .favorites-container {
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                }
+                
+                .modal-content {
+                    max-height: 85vh;
+                }
+            }
+
+            /* High DPI Displays */
+            @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+                .recipe-card img {
+                    image-rendering: -webkit-optimize-contrast;
+                    image-rendering: crisp-edges;
+                }
+            }
+
+            /* Print Styles */
+            @media print {
+                .nav-list,
+                .search-box,
+                .filter-controls,
+                .favorites-toggle,
+                .favorites-section,
+                .bookmark-btn,
+                .star-rating,
+                .modal-review-section,
+                .timer-section {
+                    display: none !important;
+                }
+                
+                .recipe-card {
+                    break-inside: avoid;
+                    page-break-inside: avoid;
+                }
+                
+                .modal-content {
+                    box-shadow: none;
+                    border: 1px solid #000;
+                }
+            }
+
+            /* About Sidebar Responsive */
+            @media (max-width: 767px) {
+                .about-sidebar {
+                    width: 100%;
+                    height: 100%;
+                }
+                
+                .sidebar-content {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0;
+                    margin: 0;
+                }
+                
+                .about-header {
+                    padding: 1rem;
+                }
+                
+                .about-header h2 {
+                    font-size: 1.5rem;
+                }
+                
+                .about-body {
+                    padding: 1rem;
+                    max-height: calc(100vh - 120px);
+                    overflow-y: auto;
+                }
+                
+                .about-body h3 {
+                    font-size: 1.2rem;
+                }
+                
+                .about-body p {
+                    font-size: 0.9rem;
+                    line-height: 1.5;
+                }
+                
+                .about-body ul {
+                    padding-left: 1.5rem;
+                }
+                
+                .about-body li {
+                    font-size: 0.9rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .close-sidebar {
+                    font-size: 1.8rem;
+                    top: 15px;
+                    right: 20px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .about-sidebar {
+                    width: 100%;
+                    height: 100%;
+                }
+                
+                .sidebar-content {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0;
+                    margin: 0;
+                }
+                
+                .about-header {
+                    padding: 0.8rem;
+                }
+                
+                .about-header h2 {
+                    font-size: 1.3rem;
+                }
+                
+                .about-body {
+                    padding: 0.8rem;
+                    max-height: calc(100vh - 100px);
+                    overflow-y: auto;
+                }
+                
+                .about-body h3 {
+                    font-size: 1.1rem;
+                }
+                
+                .about-body p {
+                    font-size: 0.85rem;
+                    line-height: 1.4;
+                }
+                
+                .about-body ul {
+                    padding-left: 1.2rem;
+                }
+                
+                .about-body li {
+                    font-size: 0.85rem;
+                    margin-bottom: 0.4rem;
+                }
+                
+                .close-sidebar {
+                    font-size: 1.5rem;
+                    top: 10px;
+                    right: 15px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <svg style="display: none;">
+        <!-- Search Icon -->
+        <symbol id="search-icon" viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </symbol>
+        
+        <!-- Home Icon -->
+        <symbol id="home-icon" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </symbol>
+        
+        <!-- Recipe Icon -->
+        <symbol id="recipe-icon" viewBox="0 0 24 24">
+            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+        </symbol>
+        
+        <!-- Blog Icon -->
+        <symbol id="blog-icon" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </symbol>
+        
+        <!-- Contact Icon -->
+        <symbol id="contact-icon" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </symbol>
+        
+        <!-- About Icon -->
+        <symbol id="about-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </symbol>
+    </svg>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Crave And Cook</h1>
+            <nav>
+                <div class="menu-icon">&#9776;</div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="index.html" class="nav-link" id="homeLink">
+                            <svg class="nav-icon"><use href="#home-icon"/></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" id="aboutLink">
+                            <svg class="nav-icon"><use href="#about-icon"/></svg>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recipe.html" class="nav-link active" id="recipeLink">
+                            <svg class="nav-icon"><use href="#recipe-icon"/></svg>
+                            Recipe
+                        </a>
+                    </li>
+                    <li>
+                        <a href="blog.html" class="nav-link" id="blogLink">
+                            <svg class="nav-icon"><use href="#blog-icon"/></svg>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html">
+                            <svg class="nav-icon"><use href="#contact-icon"/></svg>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Recipe Hero Section -->
+    <section class="hero recipe-hero">
+        <div class="hero-overlay"></div>
+         <div class="hero-section">
+            <h2>Our Recipe Collection</h2>
+            <p>Discover a world of delicious recipes!</p>
+
+            <form action="#" class="search-box">
+                <input type="text" id="searchInput" placeholder="Search Recipe">
+                <button type="submit" id="searchButton" style="display: none;">
+                    <svg class="search-button-icon"><use href="#search-icon"/></svg>
+                    Search
+                </button>
+            </form>
+         </div>
+    </section>
+
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+        <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <option value="Veg">Veg</option>
+            <option value="Non-Veg">Non-Veg</option>
+            <option value="Dessert">Dessert</option>
+        </select>
+        <select id="cookTimeFilter">
+            <option value="">All Cook Times</option>
+            <option value="<30">&lt; 30 mins</option>
+            <option value="30-60">30-60 mins</option>
+            <option value=">60">&gt; 60 mins</option>
+        </select>
+        <button class="favorites-toggle" id="favoritesToggle">
+            <span class="heart-icon">❤</span>
+            Show Favorites
+        </button>
+    </div>
+
+    <!-- Favorites Section -->
+    <div class="favorites-section" id="favoritesSection" style="display: none;">
+        <div class="favorites-header">
+            <span class="heart-icon">❤</span>
+            <h2>Your Favorite Recipes</h2>
+        </div>
+        <div class="favorites-container" id="favoritesContainer">
+            <!-- Favorited recipes will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Recipe List Section -->
+    <section class="recipes">
+        <h1>All Recipes</h1>
+        <div class="recipe-section" id="recipeContainer">
+           <!-- Data will be rendered from the JS -->
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 Crave And Cook</p>
+        </div>
+    </footer>
+
+    <!-- Recipe Modal -->
+    <div class="recipe-modal" id="recipeModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <img id="modalImage" src="" alt="Recipe Image">
+            </div>
+            <div class="modal-body">
+                <div class="recipe-details">
+                    <h3>Ingredients</h3>
+                    <ul id="ingredientsList"></ul>
+                    
+                    <h3>Instructions</h3>
+                    <ol id="instructionsList"></ol>
+                    
+                    <div class="timer-section">
+                        <h3><span class="timer-icon">⏱</span>Cooking Timer</h3>
+                        <div class="timer-display" id="timerDisplay">00:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start" id="startTimer">Start</button>
+                            <button class="timer-btn pause" id="pauseTimer" disabled>Pause</button>
+                            <button class="timer-btn reset" id="resetTimer">Reset</button>
+                        </div>
+                        <div class="timer-status" id="timerStatus">Ready to start cooking!</div>
+                    </div>
+                    
+                    <div class="modal-review-section">
+                        <h3>Rate & Review</h3>
+                        <div class="modal-star-rating" id="modalStarRating">
+                            <!-- Star rating will be inserted here -->
+                        </div>
+                        <div class="modal-review-content" id="modalReviewContent">
+                            <!-- Review content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Sidebar -->
+    <div class="about-sidebar" id="aboutSidebar">
+        <div class="sidebar-content">
+            <span class="close-sidebar">&times;</span>
+            <div class="about-header">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-body">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="About Us" class="about-image">
+                <h3>Welcome to Crave And Cook</h3>
+                <p>We are passionate about bringing delicious recipes to your kitchen. Our mission is to make cooking accessible, enjoyable, and inspiring for everyone.</p>
+                
+                <h3>Our Story</h3>
+                <p>Started in 2024, Crave And Cook has become a go-to destination for food enthusiasts looking to explore new flavors and cooking techniques.</p>
+                
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Carefully curated recipes</li>
+                    <li>Step-by-step cooking instructions</li>
+                    <li>Cooking tips and tricks</li>
+                    <li>Community-driven recipe sharing</li>
+                </ul>
+                
+                <h3>Our Team</h3>
+                <p>Our team consists of passionate food lovers, experienced chefs, and dedicated content creators who work together to bring you the best culinary experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const navList = document.querySelector('.nav-list');
+
+        menuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Recipe data with detailed ingredients and instructions
+        const recipes = {
+            'Berry Yogurt Parfait': {
+                image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                category: 'Veg',
+                cookTime: 10,
+                ingredients: [
+                    '2 cups Greek yogurt',
+                    '1 cup mixed berries (strawberries, blueberries, raspberries)',
+                    '1/2 cup granola',
+                    '2 tablespoons honey',
+                    '1/4 cup sliced almonds (optional)',
+                    'Fresh mint leaves for garnish'
+                ],
+                instructions: [
+                    'In a serving glass, start with a layer of Greek yogurt (about 1/4 cup)',
+                    'Add a layer of mixed berries',
+                    'Sprinkle a layer of granola',
+                    'Repeat the layers until the glass is filled',
+                    'Drizzle honey over the top',
+                    'Optional: add sliced almonds and mint leaves for garnish',
+                    'Serve immediately to keep the granola crunchy'
+                ]
+            },
+            'Poached Egg Toast': {
+                image: 'https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Veg',
+                cookTime: 15,
+                ingredients: [
+                    '2 fresh eggs',
+                    '2 slices of sourdough bread',
+                    '1 tablespoon white vinegar',
+                    'Salt and pepper to taste',
+                    'Fresh herbs (chives, parsley)',
+                    '1 tablespoon butter'
+                ],
+                instructions: [
+                    'Bring a pot of water to a gentle simmer, add vinegar',
+                    'Toast the bread slices until golden brown',
+                    'Create a water whirlpool and carefully drop egg into center',
+                    'Cook for 3 minutes for a runny yolk',
+                    'Remove egg with a slotted spoon and drain on paper towel',
+                    'Butter the toast and place poached egg on top',
+                    'Season with salt, pepper, and fresh herbs'
+                ]
+            },
+            'Fruit Tarts': {
+                image: 'https://images.unsplash.com/photo-1488477304112-4944851de03d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                category: 'Dessert',
+                cookTime: 50,
+                ingredients: [
+                    'Pastry dough',
+                    'Fresh mixed fruits',
+                    '2 cups custard cream',
+                    'Powdered sugar for dusting',
+                    'Apricot jam for glazing',
+                    'Vanilla extract'
+                ],
+                instructions: [
+                    'Prepare and blind bake the pastry shells until golden',
+                    'Let the shells cool completely',
+                    'Prepare vanilla custard cream and let it cool',
+                    'Fill shells with custard cream',
+                    'Arrange fresh fruits on top',
+                    'Glaze with warmed apricot jam',
+                    'Dust with powdered sugar before serving'
+                ]
+            },
+            'Paneer Tikka': {
+                image: 'https://images.pexels.com/photos/9609838/pexels-photo-9609838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Veg',
+                cookTime: 40,
+                ingredients: [
+                    '250g paneer cubes',
+                    '1 cup yogurt marinade',
+                    'Bell peppers and onions',
+                    'Tikka masala spices',
+                    'Oil for grilling',
+                    'Lemon wedges for serving'
+                ],
+                instructions: [
+                    'Mix yogurt with tikka spices for marinade',
+                    'Marinate paneer and vegetables for 2-3 hours',
+                    'Thread onto skewers alternating with vegetables',
+                    'Preheat grill or tandoor',
+                    'Grill until charred and cooked through',
+                    'Serve hot with mint chutney and lemon wedges'
+                ]
+            },
+            'Chicken Biryani': {
+                image: 'https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Non-Veg',
+                cookTime: 75,
+                ingredients: [
+                    '500g chicken pieces',
+                    '2 cups basmati rice',
+                    '2 onions, sliced',
+                    'Biryani spice blend',
+                    '1/2 cup yogurt',
+                    'Saffron strands',
+                    'Ghee or oil',
+                    'Mint and coriander leaves'
+                ],
+                instructions: [
+                    'Marinate chicken with yogurt and spices for 1 hour',
+                    'Cook rice with whole spices until 70% done',
+                    'In a heavy pot, layer rice and marinated chicken',
+                    'Add saffron milk and fried onions',
+                    'Cover tightly and cook on low heat for 20-25 minutes',
+                    'Let rest for 10 minutes before opening',
+                    'Serve hot with raita'
+                ]
+            },
+            'Chocolate Brownies': {
+                image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                category: 'Dessert',
+                cookTime: 35,
+                ingredients: [
+                    '200g dark chocolate',
+                    '180g butter',
+                    '3 large eggs',
+                    '1 cup sugar',
+                    '1 cup all-purpose flour',
+                    '1/3 cup cocoa powder',
+                    '1 tsp vanilla extract',
+                    'Pinch of salt'
+                ],
+                instructions: [
+                    'Preheat oven to 180°C (350°F)',
+                    'Melt chocolate and butter together',
+                    'Whisk eggs, sugar, and vanilla until light',
+                    'Fold in chocolate mixture',
+                    'Sift and fold in flour and cocoa',
+                    'Pour into lined baking pan',
+                    'Bake for 25-30 minutes',
+                    'Cool completely before cutting'
+                ]
+            },
+            'Caesar Salad': {
+                image: 'https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Veg',
+                cookTime: 20,
+                ingredients: [
+                    '2 heads romaine lettuce',
+                    'Homemade croutons',
+                    'Parmesan cheese',
+                    'Caesar dressing',
+                    'Black pepper',
+                    'Anchovies (optional)'
+                ],
+                instructions: [
+                    'Wash and dry lettuce leaves thoroughly',
+                    'Make fresh croutons with bread cubes',
+                    'Prepare caesar dressing',
+                    'Tear lettuce into bite-sized pieces',
+                    'Toss with dressing and most of the cheese',
+                    'Add croutons and remaining cheese',
+                    'Season with fresh black pepper'
+                ]
+            },
+            'Mushroom Pasta': {
+                image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                category: 'Veg',
+                cookTime: 30,
+                ingredients: [
+                    '400g pasta',
+                    '400g mixed mushrooms',
+                    '3 cloves garlic',
+                    '1 cup heavy cream',
+                    'Fresh parsley',
+                    'Parmesan cheese',
+                    'Olive oil',
+                    'Salt and pepper'
+                ],
+                instructions: [
+                    'Cook pasta in salted water until al dente',
+                    'Sauté mushrooms until golden brown',
+                    'Add minced garlic and cook briefly',
+                    'Pour in cream and simmer until thickened',
+                    'Add cooked pasta and toss well',
+                    'Season with salt and pepper',
+                    'Garnish with parsley and parmesan'
+                ]
+            },
+            'Vegetable Stir Fry': {
+                image: 'https://images.pexels.com/photos/6937455/pexels-photo-6937455.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Veg',
+                cookTime: 25,
+                ingredients: [
+                    'Mixed vegetables (broccoli, carrots, snap peas)',
+                    'Soy sauce',
+                    'Fresh ginger and garlic',
+                    'Sesame oil',
+                    'Cornstarch',
+                    'Rice or noodles for serving'
+                ],
+                instructions: [
+                    'Prepare all vegetables into similar-sized pieces',
+                    'Mix sauce ingredients together',
+                    'Heat wok or large pan until very hot',
+                    'Stir fry vegetables in batches',
+                    'Add sauce and cook until thickened',
+                    'Serve hot over rice or noodles',
+                    'Garnish with sesame seeds'
+                ]
+            },
+            'Butter Chicken': {
+                image: 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Non-Veg',
+                cookTime: 50,
+                ingredients: [
+                    '800g chicken thighs, cut into pieces',
+                    '2 cups tomato puree',
+                    '1 cup heavy cream',
+                    '2 tbsp butter',
+                    'Ginger-garlic paste',
+                    'Garam masala',
+                    'Kasuri methi',
+                    'Salt to taste'
+                ],
+                instructions: [
+                    'Marinate chicken in yogurt and spices',
+                    'Cook marinated chicken until done',
+                    'Prepare tomato gravy with spices',
+                    'Add cream and butter to the gravy',
+                    'Combine chicken with the gravy',
+                    'Simmer until thick and creamy',
+                    'Garnish with cream and serve hot'
+                ]
+            },
+            'Chocolate Chip Cookies': {
+                image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                category: 'Dessert',
+                cookTime: 25,
+                ingredients: [
+                    '2 1/4 cups all-purpose flour',
+                    '1 cup butter, softened',
+                    '3/4 cup sugar',
+                    '3/4 cup brown sugar',
+                    '2 eggs',
+                    '2 cups chocolate chips',
+                    '1 tsp vanilla extract',
+                    '1 tsp baking soda'
+                ],
+                instructions: [
+                    'Cream butter and sugars until fluffy',
+                    'Beat in eggs and vanilla',
+                    'Mix in dry ingredients',
+                    'Fold in chocolate chips',
+                    'Drop spoonfuls onto baking sheet',
+                    'Bake at 375°F for 10-12 minutes',
+                    'Cool on wire rack'
+                ]
+            },
+            'Greek Salad': {
+                image: 'https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Veg',
+                cookTime: 15,
+                ingredients: [
+                    'Cucumber, diced',
+                    'Tomatoes, chunked',
+                    'Red onion, sliced',
+                    'Kalamata olives',
+                    'Feta cheese',
+                    'Extra virgin olive oil',
+                    'Dried oregano',
+                    'Salt and pepper'
+                ],
+                instructions: [
+                    'Chop all vegetables into large chunks',
+                    'Combine vegetables in a bowl',
+                    'Add olives and feta cheese',
+                    'Drizzle with olive oil',
+                    'Season with oregano, salt, and pepper',
+                    'Toss gently to combine',
+                    'Serve immediately'
+                ]
+            },
+            'Sushi Rolls': {
+                image: 'https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                category: 'Non-Veg',
+                cookTime: 60,
+                ingredients: [
+                    'Sushi rice',
+                    'Nori sheets',
+                    'Fresh fish (salmon/tuna)',
+                    'Cucumber',
+                    'Avocado',
+                    'Rice vinegar',
+                    'Wasabi',
+                    'Soy sauce'
+                ],
+                instructions: [
+                    'Cook and season sushi rice',
+                    'Place nori on bamboo mat',
+                    'Spread rice on nori',
+                    'Add fish and vegetables',
+                    'Roll tightly using mat',
+                    'Cut into 6-8 pieces',
+                    'Serve with wasabi and soy sauce'
+                ]
+            }
+        };
+
+        // Initial render of recipes
+        document.addEventListener('DOMContentLoaded', () => {
+            const recipeContainer = document.getElementById('recipeContainer');
+            recipeContainer.innerHTML = Object.entries(recipes).map(([name, recipe]) => {
+                const userRating = getUserRating(name);
+                const isBookmarked = isRecipeBookmarked(name);
+                return `
+                    <div class="recipe-card">
+                        <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-recipe="${name}">
+                            <span class="heart-icon">❤</span>
+                        </button>
+                        <img src="${recipe.image}" alt="${name}">
+                        <div class="recipe-info">
+                            <span class="recipe-category">${recipe.category}</span>
+                            <span class="recipe-cooktime">${recipe.cookTime} mins</span>
+                            <h2>${name}</h2>
+                            <div class="star-rating" data-recipe="${name}">
+                                ${generateStars(name, userRating)}
+                            </div>
+                            <p>${getDescriptionForRecipe(name)}</p>
+                            <a href="#" class="view-recipe">View Recipe</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Reattach event listeners after rendering
+            attachRecipeCardListeners();
+            attachStarRatingListeners();
+            attachBookmarkListeners();
+            
+            // Add filter event listeners
+            document.getElementById('categoryFilter').addEventListener('change', filterRecipes);
+            document.getElementById('cookTimeFilter').addEventListener('change', filterRecipes);
+            
+            // Add favorites toggle listener
+            document.getElementById('favoritesToggle').addEventListener('click', toggleFavoritesSection);
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('recipeModal');
+        const recipeCards = document.querySelectorAll('.recipe-card a');
+        const closeBtn = document.querySelector('.close-modal');
+
+        recipeCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const recipeName = card.parentElement.querySelector('h2').textContent;
+                const recipe = recipes[recipeName];
+                
+                document.getElementById('modalTitle').textContent = recipeName;
+                document.getElementById('modalImage').src = recipe.image;
+                
+                const ingredientsList = document.getElementById('ingredientsList');
+                ingredientsList.innerHTML = recipe.ingredients
+                    .map(ingredient => `<li>${ingredient}</li>`)
+                    .join('');
+                
+                const instructionsList = document.getElementById('instructionsList');
+                instructionsList.innerHTML = recipe.instructions
+                    .map(instruction => `<li>${instruction}</li>`)
+                    .join('');
+                
+                // Add review section to modal
+                const reviewSection = generateModalReviewSection(recipeName);
+                document.getElementById('modalStarRating').innerHTML = reviewSection.stars;
+                document.getElementById('modalReviewContent').innerHTML = reviewSection.review;
+                
+                // Initialize timer for this recipe
+                initializeTimer(recipeName, recipe.cookTime);
+                
+                modal.style.display = 'block';
+                
+                // Attach modal review listeners
+                attachModalReviewListeners();
+                // Attach timer listeners
+                attachTimerListeners();
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // About sidebar functionality
+        const aboutLink = document.getElementById('aboutLink');
+        const homeLink = document.getElementById('homeLink');
+        const recipeLink = document.getElementById('recipeLink');
+        const aboutSidebar = document.getElementById('aboutSidebar');
+        const closeSidebar = document.querySelector('.close-sidebar');
+
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Update active states
+            homeLink.classList.remove('active');
+            recipeLink.classList.remove('active');
+            aboutLink.classList.add('active');
+        });
+
+        function closeAboutSection() {
+            aboutSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+            // Reset active states
+            aboutLink.classList.remove('active');
+            recipeLink.classList.add('active');
+        }
+
+        closeSidebar.addEventListener('click', closeAboutSection);
+
+        // Close sidebar when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === aboutSidebar) {
+                closeAboutSection();
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const recipeContainer = document.getElementById('recipeContainer');
+        const originalContent = recipeContainer.innerHTML;
+
+        function searchRecipes(searchTerm) {
+            const searchTermLower = searchTerm.toLowerCase();
+            const filteredRecipes = Object.entries(recipes).filter(([name, recipe]) => 
+                name.toLowerCase().includes(searchTermLower) ||
+                recipe.ingredients.some(ingredient => 
+                    ingredient.toLowerCase().includes(searchTermLower)
+                )
+            );
+
+            recipeContainer.innerHTML = filteredRecipes.length > 0 
+                ? filteredRecipes.map(([name, recipe]) => {
+                    const userRating = getUserRating(name);
+                    const isBookmarked = isRecipeBookmarked(name);
+                    return `
+                        <div class="recipe-card">
+                            <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-recipe="${name}">
+                                <span class="heart-icon">❤</span>
+                            </button>
+                            <img src="${recipe.image}" alt="${name}">
+                            <div class="recipe-info">
+                                <span class="recipe-category">${recipe.category}</span>
+                                <span class="recipe-cooktime">${recipe.cookTime} mins</span>
+                                <h2>${name}</h2>
+                                <div class="star-rating" data-recipe="${name}">
+                                    ${generateStars(name, userRating)}
+                                </div>
+                                <p>${getDescriptionForRecipe(name)}</p>
+                                <a href="#" class="view-recipe">View Recipe</a>
+                            </div>
+                        </div>
+                    `;
+                }).join('')
+                : '<p class="no-results">No recipes found matching your search.</p>';
+
+            attachRecipeCardListeners();
+            attachStarRatingListeners();
+            attachBookmarkListeners();
+        }
+
+        function attachRecipeCardListeners() {
+            const recipeCards = document.querySelectorAll('.recipe-card a');
+            recipeCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const recipeName = card.parentElement.querySelector('h2').textContent;
+                    const recipe = recipes[recipeName];
+                    
+                    document.getElementById('modalTitle').textContent = recipeName;
+                    document.getElementById('modalImage').src = recipe.image;
+                    
+                    const ingredientsList = document.getElementById('ingredientsList');
+                    ingredientsList.innerHTML = recipe.ingredients
+                        .map(ingredient => `<li>${ingredient}</li>`)
+                        .join('');
+                    
+                    const instructionsList = document.getElementById('instructionsList');
+                    instructionsList.innerHTML = recipe.instructions
+                        .map(instruction => `<li>${instruction}</li>`)
+                        .join('');
+                    
+                    // Add review section to modal
+                    const reviewSection = generateModalReviewSection(recipeName);
+                    document.getElementById('modalStarRating').innerHTML = reviewSection.stars;
+                    document.getElementById('modalReviewContent').innerHTML = reviewSection.review;
+                    
+                    // Initialize timer for this recipe
+                    initializeTimer(recipeName, recipe.cookTime);
+                    
+                    modal.style.display = 'block';
+                    
+                    // Attach modal review listeners
+                    attachModalReviewListeners();
+                    // Attach timer listeners
+                    attachTimerListeners();
+                });
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim();
+            if (searchTerm === '') {
+                // Instantly render all recipes when input is empty
+                recipeContainer.innerHTML = Object.entries(recipes).map(([name, recipe]) => {
+                    const userRating = getUserRating(name);
+                    const isBookmarked = isRecipeBookmarked(name);
+                    return `
+                        <div class="recipe-card">
+                            <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-recipe="${name}">
+                                <span class="heart-icon">❤</span>
+                            </button>
+                            <img src="${recipe.image}" alt="${name}">
+                            <div class="recipe-info">
+                                <span class="recipe-category">${recipe.category}</span>
+                                <span class="recipe-cooktime">${recipe.cookTime} mins</span>
+                                <h2>${name}</h2>
+                                <div class="star-rating" data-recipe="${name}">
+                                    ${generateStars(name, userRating)}
+                                </div>
+                                <p>${getDescriptionForRecipe(name)}</p>
+                                <a href="#" class="view-recipe">View Recipe</a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                attachRecipeCardListeners();
+                attachStarRatingListeners();
+                attachBookmarkListeners();
+            } else {
+                searchRecipes(searchTerm);
+            }
+        });
+
+        // Add helper functions for descriptions
+        function getDescriptionForRecipe(name) {
+            const descriptions = {
+                'Berry Yogurt Parfait': 'A perfect breakfast start with layers of yogurt, berries, and granola.',
+                'Poached Egg Toast': 'Perfectly poached eggs on toasted bread with herbs.',
+                'Fruit Tarts': 'Delicate pastry shells filled with custard and fresh fruits.',
+                'Paneer Tikka': 'Grilled Indian cottage cheese with spices and vegetables.',
+                'Chicken Biryani': 'Aromatic rice dish with tender chicken and exotic spices.',
+                'Chocolate Brownies': 'Fudgy, rich chocolate brownies with a crispy top.',
+                'Caesar Salad': 'Classic salad with crisp romaine and creamy dressing.',
+                'Mushroom Pasta': 'Creamy pasta with sautéed mushrooms and herbs.',
+                'Vegetable Stir Fry': 'Colorful vegetables in a savory Asian-style sauce.',
+                'Butter Chicken': 'Creamy, rich Indian curry with tender chicken pieces.',
+                'Chocolate Chip Cookies': 'Classic cookies with gooey chocolate chips.',
+                'Greek Salad': 'Fresh Mediterranean salad with feta and olives.',
+                'Sushi Rolls': 'Fresh and colorful Japanese sushi rolls.'
+            };
+            return descriptions[name] || 'A delicious recipe to try!';
+        }
+
+        // Star Rating System Functions
+        function getUserRating(recipeName) {
+            const ratings = JSON.parse(localStorage.getItem('recipeRatings') || '{}');
+            return ratings[recipeName] || 0;
+        }
+
+        function saveUserRating(recipeName, rating) {
+            const ratings = JSON.parse(localStorage.getItem('recipeRatings') || '{}');
+            ratings[recipeName] = rating;
+            localStorage.setItem('recipeRatings', JSON.stringify(ratings));
+        }
+
+        function getUserReview(recipeName) {
+            const reviews = JSON.parse(localStorage.getItem('recipeReviews') || '{}');
+            return reviews[recipeName] || '';
+        }
+
+        function saveUserReview(recipeName, review) {
+            const reviews = JSON.parse(localStorage.getItem('recipeReviews') || '{}');
+            reviews[recipeName] = review;
+            localStorage.setItem('recipeReviews', JSON.stringify(reviews));
+        }
+
+        function removeUserReview(recipeName) {
+            const reviews = JSON.parse(localStorage.getItem('recipeReviews') || '{}');
+            delete reviews[recipeName];
+            localStorage.setItem('recipeReviews', JSON.stringify(reviews));
+        }
+
+        function generateStars(recipeName, userRating) {
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const starClass = i <= userRating ? 'star filled' : 'star';
+                starsHTML += `<span class="${starClass}" data-rating="${i}" data-recipe="${recipeName}">★</span>`;
+            }
+            
+            const ratingText = userRating > 0 ? 
+                `<span class="rating-text user-rating">Your rating: ${userRating}/5</span>` : 
+                '<span class="rating-text">Click to rate</span>';
+            
+            return starsHTML + ratingText;
+        }
+
+        function attachStarRatingListeners() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = star.dataset.recipe;
+                    const clickedRating = parseInt(star.dataset.rating);
+                    const currentRating = getUserRating(recipeName);
+                    
+                    // If clicking the same star that's already rated, remove the rating
+                    if (clickedRating === currentRating) {
+                        saveUserRating(recipeName, 0);
+                    } else {
+                        // Otherwise, set the new rating
+                        saveUserRating(recipeName, clickedRating);
+                    }
+                    
+                    // Update the star display
+                    const starContainer = star.closest('.star-rating');
+                    const userRating = getUserRating(recipeName);
+                    starContainer.innerHTML = generateStars(recipeName, userRating);
+                    
+                    // Reattach listeners to the new stars
+                    attachStarRatingListeners();
+                });
+
+                star.addEventListener('mouseenter', (e) => {
+                    const rating = parseInt(star.dataset.rating);
+                    const stars = star.parentElement.querySelectorAll('.star');
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+
+                star.addEventListener('mouseleave', (e) => {
+                    const stars = star.parentElement.querySelectorAll('.star');
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                    });
+                });
+            });
+        }
+
+        function generateModalReviewSection(recipeName) {
+            const userRating = getUserRating(recipeName);
+            const userReview = getUserReview(recipeName);
+            
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const starClass = i <= userRating ? 'star filled' : 'star';
+                starsHTML += `<span class="${starClass}" data-rating="${i}" data-recipe="${recipeName}" data-modal="true">★</span>`;
+            }
+            
+            const ratingText = userRating > 0 ? 
+                `<span class="rating-text user-rating">Your rating: ${userRating}/5</span>` : 
+                '<span class="rating-text">Click to rate</span>';
+            
+            let reviewSection = '';
+            if (userReview) {
+                // User has already written a review
+                reviewSection = `<div class="review-section show">
+                    <span class="review-label">Your Review:</span>
+                    <div class="user-review">${userReview}</div>
+                    <button class="edit-review-btn" data-recipe="${recipeName}" data-modal="true">Edit Review</button>
+                    <button class="remove-review-btn" data-recipe="${recipeName}" data-modal="true">Remove Review</button>
+                </div>`;
+            } else if (userRating > 0) {
+                // User has rated but no review yet
+                reviewSection = `<div class="review-section show" id="modal-review-section-${recipeName.replace(/\s+/g, '-')}">
+                    <label class="review-label">Write a review (optional):</label>
+                    <textarea class="review-textarea" placeholder="Share your thoughts about this recipe..." maxlength="500"></textarea>
+                    <button class="save-review-btn" data-recipe="${recipeName}" data-modal="true">Save Review</button>
+                </div>`;
+            } else {
+                // No rating yet, show write review button
+                reviewSection = `<button class="write-review-btn" data-recipe="${recipeName}" data-modal="true">Write Review</button>
+                <div class="review-section" id="modal-review-section-${recipeName.replace(/\s+/g, '-')}">
+                    <label class="review-label">Write a review (optional):</label>
+                    <textarea class="review-textarea" placeholder="Share your thoughts about this recipe..." maxlength="500"></textarea>
+                    <button class="save-review-btn" data-recipe="${recipeName}" data-modal="true">Save Review</button>
+                </div>`;
+            }
+            
+            return {
+                stars: starsHTML + ratingText,
+                review: reviewSection
+            };
+        }
+
+        function attachModalReviewListeners() {
+            // Modal star rating listeners
+            const modalStars = document.querySelectorAll('#modalStarRating .star');
+            modalStars.forEach(star => {
+                star.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = star.dataset.recipe;
+                    const clickedRating = parseInt(star.dataset.rating);
+                    const currentRating = getUserRating(recipeName);
+                    
+                    // If clicking the same star that's already rated, remove the rating
+                    if (clickedRating === currentRating) {
+                        saveUserRating(recipeName, 0);
+                    } else {
+                        // Otherwise, set the new rating
+                        saveUserRating(recipeName, clickedRating);
+                    }
+                    
+                    // Update the modal star display
+                    const reviewSection = generateModalReviewSection(recipeName);
+                    document.getElementById('modalStarRating').innerHTML = reviewSection.stars;
+                    document.getElementById('modalReviewContent').innerHTML = reviewSection.review;
+                    
+                    // Reattach modal listeners
+                    attachModalReviewListeners();
+                });
+
+                star.addEventListener('mouseenter', (e) => {
+                    const rating = parseInt(star.dataset.rating);
+                    const stars = star.parentElement.querySelectorAll('.star');
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+
+                star.addEventListener('mouseleave', (e) => {
+                    const stars = star.parentElement.querySelectorAll('.star');
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                    });
+                });
+            });
+
+            // Modal write review button listeners
+            const modalWriteReviewBtns = document.querySelectorAll('#modalReviewContent .write-review-btn');
+            modalWriteReviewBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = btn.dataset.recipe;
+                    const reviewSection = document.getElementById(`modal-review-section-${recipeName.replace(/\s+/g, '-')}`);
+                    
+                    if (reviewSection) {
+                        reviewSection.classList.add('show');
+                        btn.style.display = 'none';
+                        
+                        // Focus on textarea
+                        const textarea = reviewSection.querySelector('.review-textarea');
+                        if (textarea) {
+                            textarea.focus();
+                        }
+                    }
+                });
+            });
+
+            // Modal save review button listeners
+            const modalSaveReviewBtns = document.querySelectorAll('#modalReviewContent .save-review-btn');
+            modalSaveReviewBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = btn.dataset.recipe;
+                    const textarea = btn.parentElement.querySelector('.review-textarea');
+                    const review = textarea.value.trim();
+                    
+                    if (review) {
+                        saveUserReview(recipeName, review);
+                        
+                        // Update the modal display
+                        const reviewSection = generateModalReviewSection(recipeName);
+                        document.getElementById('modalStarRating').innerHTML = reviewSection.stars;
+                        document.getElementById('modalReviewContent').innerHTML = reviewSection.review;
+                        
+                        // Reattach modal listeners
+                        attachModalReviewListeners();
+                    }
+                });
+            });
+
+            // Modal edit review button listeners
+            const modalEditReviewBtns = document.querySelectorAll('#modalReviewContent .edit-review-btn');
+            modalEditReviewBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = btn.dataset.recipe;
+                    const currentReview = getUserReview(recipeName);
+                    
+                    // Replace the review display with textarea
+                    const reviewSection = btn.parentElement;
+                    reviewSection.innerHTML = `
+                        <label class="review-label">Edit your review:</label>
+                        <textarea class="review-textarea" placeholder="Share your thoughts about this recipe..." maxlength="500">${currentReview}</textarea>
+                        <button class="save-review-btn" data-recipe="${recipeName}" data-modal="true">Update Review</button>
+                        <button class="cancel-edit-btn" data-recipe="${recipeName}" data-modal="true">Cancel</button>
+                    `;
+                    
+                    // Focus on textarea
+                    const textarea = reviewSection.querySelector('.review-textarea');
+                    textarea.focus();
+                    
+                    // Reattach modal listeners
+                    attachModalReviewListeners();
+                });
+            });
+
+            // Modal cancel edit button listeners
+            const modalCancelEditBtns = document.querySelectorAll('#modalReviewContent .cancel-edit-btn');
+            modalCancelEditBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = btn.dataset.recipe;
+                    const reviewSection = generateModalReviewSection(recipeName);
+                    document.getElementById('modalStarRating').innerHTML = reviewSection.stars;
+                    document.getElementById('modalReviewContent').innerHTML = reviewSection.review;
+                    
+                    // Reattach modal listeners
+                    attachModalReviewListeners();
+                });
+            });
+
+            // Modal remove review button listeners
+            const modalRemoveReviewBtns = document.querySelectorAll('#modalReviewContent .remove-review-btn');
+            modalRemoveReviewBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = btn.dataset.recipe;
+                    
+                    // Confirm removal
+                    if (confirm('Are you sure you want to remove your review? This action cannot be undone.')) {
+                        removeUserReview(recipeName);
+                        
+                        // Update the modal display
+                        const reviewSection = generateModalReviewSection(recipeName);
+                        document.getElementById('modalStarRating').innerHTML = reviewSection.stars;
+                        document.getElementById('modalReviewContent').innerHTML = reviewSection.review;
+                        
+                        // Reattach modal listeners
+                        attachModalReviewListeners();
+                    }
+                });
+            });
+        }
+
+        // Filtering logic
+        function filterRecipes() {
+            const category = document.getElementById('categoryFilter').value;
+            const cookTime = document.getElementById('cookTimeFilter').value;
+            let filtered = Object.entries(recipes);
+
+            if (category) {
+                filtered = filtered.filter(([name, recipe]) => {
+                    if (category === 'Dessert') return recipe.category === 'Dessert';
+                    if (category === 'Veg') return recipe.category === 'Veg';
+                    if (category === 'Non-Veg') return recipe.category === 'Non-Veg';
+                    return true;
+                });
+            }
+            if (cookTime) {
+                filtered = filtered.filter(([name, recipe]) => {
+                    if (cookTime === '<30') return recipe.cookTime < 30;
+                    if (cookTime === '30-60') return recipe.cookTime >= 30 && recipe.cookTime <= 60;
+                    if (cookTime === '>60') return recipe.cookTime > 60;
+                    return true;
+                });
+            }
+
+            recipeContainer.innerHTML = filtered.length > 0
+                ? filtered.map(([name, recipe]) => {
+                    const userRating = getUserRating(name);
+                    const isBookmarked = isRecipeBookmarked(name);
+                    return `
+                        <div class="recipe-card">
+                            <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-recipe="${name}">
+                                <span class="heart-icon">❤</span>
+                            </button>
+                            <img src="${recipe.image}" alt="${name}">
+                            <div class="recipe-info">
+                                <span class="recipe-category">${recipe.category}</span>
+                                <span class="recipe-cooktime">${recipe.cookTime} mins</span>
+                                <h2>${name}</h2>
+                                <div class="star-rating" data-recipe="${name}">
+                                    ${generateStars(name, userRating)}
+                                </div>
+                                <p>${getDescriptionForRecipe(name)}</p>
+                                <a href="#" class="view-recipe">View Recipe</a>
+                            </div>
+                        </div>
+                    `;
+                }).join('')
+                : '<p class="no-results">No recipes found matching your filters.</p>';
+            attachRecipeCardListeners();
+            attachStarRatingListeners();
+            attachBookmarkListeners();
+        }
+
+        // Bookmark System Functions
+        function isRecipeBookmarked(recipeName) {
+            const bookmarks = JSON.parse(localStorage.getItem('recipeBookmarks') || '[]');
+            return bookmarks.includes(recipeName);
+        }
+
+        function toggleBookmark(recipeName) {
+            const bookmarks = JSON.parse(localStorage.getItem('recipeBookmarks') || '[]');
+            const isBookmarked = bookmarks.includes(recipeName);
+            
+            if (isBookmarked) {
+                // Remove from bookmarks
+                const updatedBookmarks = bookmarks.filter(name => name !== recipeName);
+                localStorage.setItem('recipeBookmarks', JSON.stringify(updatedBookmarks));
+            } else {
+                // Add to bookmarks
+                bookmarks.push(recipeName);
+                localStorage.setItem('recipeBookmarks', JSON.stringify(bookmarks));
+            }
+            
+            return !isBookmarked; // Return new bookmark state
+        }
+
+        function getBookmarkedRecipes() {
+            const bookmarks = JSON.parse(localStorage.getItem('recipeBookmarks') || '[]');
+            return bookmarks;
+        }
+
+        function attachBookmarkListeners() {
+            const bookmarkBtns = document.querySelectorAll('.bookmark-btn');
+            bookmarkBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const recipeName = btn.dataset.recipe;
+                    const newBookmarkState = toggleBookmark(recipeName);
+                    
+                    // Update button appearance
+                    if (newBookmarkState) {
+                        btn.classList.add('bookmarked');
+                    } else {
+                        btn.classList.remove('bookmarked');
+                    }
+                    
+                    // Update favorites section if it's visible
+                    const favoritesSection = document.getElementById('favoritesSection');
+                    if (favoritesSection.style.display !== 'none') {
+                        updateFavoritesSection();
+                    }
+                    
+                    // Update all bookmark buttons for this recipe across the page
+                    const allBookmarkBtns = document.querySelectorAll(`[data-recipe="${recipeName}"]`);
+                    allBookmarkBtns.forEach(bookmarkBtn => {
+                        if (newBookmarkState) {
+                            bookmarkBtn.classList.add('bookmarked');
+                        } else {
+                            bookmarkBtn.classList.remove('bookmarked');
+                        }
+                    });
+                });
+            });
+        }
+
+        function toggleFavoritesSection() {
+            const favoritesSection = document.getElementById('favoritesSection');
+            const favoritesToggle = document.getElementById('favoritesToggle');
+            const isVisible = favoritesSection.style.display !== 'none';
+            
+            if (isVisible) {
+                favoritesSection.style.display = 'none';
+                favoritesToggle.innerHTML = '<span class="heart-icon">❤</span>Show Favorites';
+            } else {
+                favoritesSection.style.display = 'block';
+                favoritesToggle.innerHTML = '<span class="heart-icon">❤</span>Hide Favorites';
+                updateFavoritesSection();
+            }
+        }
+
+        function updateFavoritesSection() {
+            const favoritesContainer = document.getElementById('favoritesContainer');
+            const bookmarkedRecipes = getBookmarkedRecipes();
+            
+            if (bookmarkedRecipes.length === 0) {
+                favoritesContainer.innerHTML = '<div class="no-favorites">No favorite recipes yet. Click the heart icon on any recipe to add it to your favorites!</div>';
+                return;
+            }
+            
+            favoritesContainer.innerHTML = bookmarkedRecipes.map(recipeName => {
+                const recipe = recipes[recipeName];
+                const userRating = getUserRating(recipeName);
+                const isBookmarked = isRecipeBookmarked(recipeName);
+                return `
+                    <div class="recipe-card">
+                        <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-recipe="${recipeName}">
+                            <span class="heart-icon">❤</span>
+                        </button>
+                        <img src="${recipe.image}" alt="${recipeName}">
+                        <div class="recipe-info">
+                            <span class="recipe-category">${recipe.category}</span>
+                            <span class="recipe-cooktime">${recipe.cookTime} mins</span>
+                            <h2>${recipeName}</h2>
+                            <div class="star-rating" data-recipe="${recipeName}">
+                                ${generateStars(recipeName, userRating)}
+                            </div>
+                            <p>${getDescriptionForRecipe(recipeName)}</p>
+                            <a href="#" class="view-recipe">View Recipe</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Reattach listeners for the favorites section
+            attachRecipeCardListeners();
+            attachStarRatingListeners();
+            attachBookmarkListeners();
+        }
+
+        // Timer System Functions
+        let timerInterval = null;
+        let currentTimer = {
+            recipeName: '',
+            totalSeconds: 0,
+            remainingSeconds: 0,
+            isRunning: false,
+            isPaused: false
+        };
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimerDisplay() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerStatus = document.getElementById('timerStatus');
+            
+            if (!timerDisplay) return;
+            
+            timerDisplay.textContent = formatTime(currentTimer.remainingSeconds);
+            
+            // Update display color based on remaining time
+            const percentage = (currentTimer.remainingSeconds / currentTimer.totalSeconds) * 100;
+            timerDisplay.className = 'timer-display';
+            
+            if (percentage <= 25) {
+                timerDisplay.classList.add('danger');
+            } else if (percentage <= 50) {
+                timerDisplay.classList.add('warning');
+            }
+            
+            // Update status text
+            if (currentTimer.isRunning) {
+                timerStatus.textContent = 'Timer is running...';
+            } else if (currentTimer.isPaused) {
+                timerStatus.textContent = 'Timer is paused';
+            } else if (currentTimer.remainingSeconds === 0) {
+                timerStatus.textContent = 'Timer finished!';
+            } else {
+                timerStatus.textContent = 'Ready to start cooking!';
+            }
+        }
+
+        function startTimer() {
+            if (currentTimer.remainingSeconds === 0) return;
+            
+            currentTimer.isRunning = true;
+            currentTimer.isPaused = false;
+            
+            document.getElementById('startTimer').disabled = true;
+            document.getElementById('pauseTimer').disabled = false;
+            
+            timerInterval = setInterval(() => {
+                currentTimer.remainingSeconds--;
+                updateTimerDisplay();
+                
+                if (currentTimer.remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    currentTimer.isRunning = false;
+                    document.getElementById('startTimer').disabled = true;
+                    document.getElementById('pauseTimer').disabled = true;
+                    
+                    // Show completion notification
+                    const timerDisplay = document.getElementById('timerDisplay');
+                    if (timerDisplay) {
+                        timerDisplay.textContent = 'DONE!';
+                        timerDisplay.className = 'timer-display danger';
+                    }
+                    
+                    // Save timer state
+                    saveTimerState();
+                }
+            }, 1000);
+            
+            saveTimerState();
+        }
+
+        function pauseTimer() {
+            if (!currentTimer.isRunning) return;
+            
+            clearInterval(timerInterval);
+            currentTimer.isRunning = false;
+            currentTimer.isPaused = true;
+            
+            document.getElementById('startTimer').disabled = false;
+            document.getElementById('pauseTimer').disabled = true;
+            
+            updateTimerDisplay();
+            saveTimerState();
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            currentTimer.remainingSeconds = currentTimer.totalSeconds;
+            currentTimer.isRunning = false;
+            currentTimer.isPaused = false;
+            
+            document.getElementById('startTimer').disabled = false;
+            document.getElementById('pauseTimer').disabled = true;
+            
+            updateTimerDisplay();
+            saveTimerState();
+        }
+
+        function initializeTimer(recipeName, cookTimeMinutes) {
+            const totalSeconds = cookTimeMinutes * 60;
+            
+            // Load saved timer state for this recipe
+            const savedTimer = loadTimerState(recipeName);
+            
+            if (savedTimer && savedTimer.remainingSeconds > 0) {
+                currentTimer = {
+                    recipeName: recipeName,
+                    totalSeconds: totalSeconds,
+                    remainingSeconds: savedTimer.remainingSeconds,
+                    isRunning: false,
+                    isPaused: savedTimer.isPaused || false
+                };
+                
+                // If timer was running, restart it
+                if (savedTimer.isRunning) {
+                    startTimer();
+                }
+            } else {
+                currentTimer = {
+                    recipeName: recipeName,
+                    totalSeconds: totalSeconds,
+                    remainingSeconds: totalSeconds,
+                    isRunning: false,
+                    isPaused: false
+                };
+            }
+            
+            updateTimerDisplay();
+        }
+
+        function saveTimerState() {
+            const timers = JSON.parse(localStorage.getItem('recipeTimers') || '{}');
+            timers[currentTimer.recipeName] = {
+                remainingSeconds: currentTimer.remainingSeconds,
+                isRunning: currentTimer.isRunning,
+                isPaused: currentTimer.isPaused,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('recipeTimers', JSON.stringify(timers));
+        }
+
+        function loadTimerState(recipeName) {
+            const timers = JSON.parse(localStorage.getItem('recipeTimers') || '{}');
+            return timers[recipeName] || null;
+        }
+
+        function attachTimerListeners() {
+            const startBtn = document.getElementById('startTimer');
+            const pauseBtn = document.getElementById('pauseTimer');
+            const resetBtn = document.getElementById('resetTimer');
+            
+            if (startBtn) {
+                startBtn.addEventListener('click', startTimer);
+            }
+            if (pauseBtn) {
+                pauseBtn.addEventListener('click', pauseTimer);
+            }
+            if (resetBtn) {
+                resetBtn.addEventListener('click', resetTimer);
+            }
+        }
+    </script>
+    </body>
+</html> 

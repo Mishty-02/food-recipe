@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="images/logo.ico">
+        <title> Recipe Website - By Mishty Sarkar </title>
+    </head>
+    <body>
+    <svg style="display: none;">
+        <!-- Search Icon -->
+        <symbol id="search-icon" viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </symbol>
+        
+        <!-- Home Icon -->
+        <symbol id="home-icon" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </symbol>
+        
+        <!-- Recipe Icon -->
+        <symbol id="recipe-icon" viewBox="0 0 24 24">
+            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+        </symbol>
+        
+        <!-- Blog Icon -->
+        <symbol id="blog-icon" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </symbol>
+        
+        <!-- Contact Icon -->
+        <symbol id="contact-icon" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </symbol>
+        
+        <!-- About Icon -->
+        <symbol id="about-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </symbol>
+    </svg>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Crave & Cook</h1>
+            <nav>
+                <div class="menu-icon">&#9776;</div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="index.html" class="nav-link active" id="homeLink">
+                            <svg class="nav-icon"><use href="#home-icon"/></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" id="aboutLink">
+                            <svg class="nav-icon"><use href="#about-icon"/></svg>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recipe.html">
+                            <svg class="nav-icon"><use href="#recipe-icon"/></svg>
+                            Recipe
+                        </a>
+                    </li>
+                    <li>
+                        <a href="blog.html">
+                            <svg class="nav-icon"><use href="#blog-icon"/></svg>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html">
+                            <svg class="nav-icon"><use href="#contact-icon"/></svg>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ..........Hero Section.......... -->
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-section">
+            <h2>Welcome to our recipe collection!</h2>
+            <p>Explore, experiment, enjoy one recipe at a time.</p>
+        </div>
+    </section>
+
+    <!-- ..........Recipe Section.......... -->
+    <section class="recipes">
+        <h1>Top Recipes</h1>
+        <div class="recipe-section" id="recipeSection">
+            <!-- Recipe cards will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 Crave & Cook</p>
+        </div>
+    </footer>
+    <div class="recipe-modal" id="recipeModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <img id="modalImage" src="" alt="Recipe Image">
+            </div>
+            <div class="modal-body">
+                <div class="recipe-details">
+                    <h3>Ingredients</h3>
+                    <ul id="ingredientsList">
+                    </ul>
+                    
+                    <h3>Instructions</h3>
+                    <ol id="instructionsList">
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-sidebar" id="aboutSidebar">
+        <div class="sidebar-content">
+            <span class="close-sidebar">&times;</span>
+            <div class="about-header">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-body">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="About Us" class="about-image">
+                <h3>Welcome to Crave And Cook</h3>
+                <p>We are passionate about bringing delicious recipes to your kitchen. Our mission is to make cooking accessible, enjoyable, and inspiring for everyone.</p>
+                
+                <h3>Our Story</h3>
+                <p>Started in 2024, Crave And Cook has become a go-to destination for food enthusiasts looking to explore new flavors and cooking techniques.</p>
+                
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Carefully curated recipes</li>
+                    <li>Step-by-step cooking instructions</li>
+                    <li>Cooking tips and tricks</li>
+                    <li>Community-driven recipe sharing</li>
+                </ul>
+                
+                <h3>Our Team</h3>
+                <p>Our team consists of passionate food lovers, experienced chefs, and dedicated content creators who work together to bring you the best culinary experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const navList = document.querySelector('.nav-list');
+
+        menuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Global variable to store recipes
+        let recipes = [];
+
+        // Function to fetch recipes from JSON file
+        async function fetchRecipes() {
+            try {
+                const response = await fetch('recipes.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch recipes');
+                }
+                recipes = await response.json();
+                displayRecipes();
+            } catch (error) {
+                console.error('Error loading recipes:', error);
+                // Fallback to static recipes if JSON fails to load
+                loadFallbackRecipes();
+            }
+        }
+
+        // Function to display recipes
+        function displayRecipes() {
+            const recipeSection = document.getElementById('recipeSection');
+            recipeSection.innerHTML = '';
+
+            recipes.forEach(recipe => {
+                const recipeCard = createRecipeCard(recipe);
+                recipeSection.appendChild(recipeCard);
+            });
+
+            // Add event listeners to new recipe cards
+            addRecipeCardListeners();
+        }
+
+        // Function to create a recipe card
+        function createRecipeCard(recipe) {
+            const card = document.createElement('div');
+            card.className = 'recipe-card';
+            card.dataset.recipeId = recipe.id;
+
+            card.innerHTML = `
+                <img src="${recipe.image}" alt="${recipe.title}">
+                <div class="recipe-info">
+                    <span class="recipe-category">${recipe.category}</span>
+                    <h2>${recipe.title}</h2>
+                    <div class="recipe-meta">
+                        <span class="cook-time">⏱ ${recipe.cookTime} min</span>
+                        <span class="difficulty">📊 ${recipe.difficulty}</span>
+                    </div>
+                    <p>"${getRandomDescription()}"</p>
+                    <a href="#" class="view-recipe-btn">View Recipe</a>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Function to get random description for recipes
+        function getRandomDescription() {
+            const descriptions = [
+                "A delicious and easy-to-make recipe that will impress everyone!",
+                "Perfect for any occasion, this recipe is a crowd-pleaser.",
+                "Simple ingredients, amazing flavors - what more could you ask for?",
+                "A classic recipe with a modern twist that's sure to delight.",
+                "Quick, healthy, and absolutely delicious - the perfect combination!",
+                "This recipe brings together the best flavors in perfect harmony.",
+                "Easy to follow steps lead to restaurant-quality results at home.",
+                "A comforting dish that feels like a warm hug on a plate."
+            ];
+            return descriptions[Math.floor(Math.random() * descriptions.length)];
+        }
+
+        // Function to add event listeners to recipe cards
+        function addRecipeCardListeners() {
+            const recipeCards = document.querySelectorAll('.recipe-card .view-recipe-btn');
+            
+            recipeCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const recipeCard = card.closest('.recipe-card');
+                    const recipeId = parseInt(recipeCard.dataset.recipeId);
+                    const recipe = recipes.find(r => r.id === recipeId);
+                    
+                    if (recipe) {
+                        showRecipeModal(recipe);
+                    }
+                });
+            });
+        }
+
+        // Function to show recipe modal
+        function showRecipeModal(recipe) {
+            const modal = document.getElementById('recipeModal');
+            
+            document.getElementById('modalTitle').textContent = recipe.title;
+            document.getElementById('modalImage').src = recipe.image;
+            
+            const ingredientsList = document.getElementById('ingredientsList');
+            ingredientsList.innerHTML = recipe.ingredients
+                .map(ingredient => `<li>${ingredient}</li>`)
+                .join('');
+            
+            const instructionsList = document.getElementById('instructionsList');
+            instructionsList.innerHTML = recipe.steps
+                .map(step => `<li>${step}</li>`)
+                .join('');
+            
+            modal.style.display = 'block';
+        }
+
+        // Fallback recipes if JSON fails to load
+        function loadFallbackRecipes() {
+            const fallbackRecipes = [
+                {
+                    id: 1,
+                    title: "Berry Yogurt Parfait",
+                    image: "images/dish-1.jpg",
+                    category: "Breakfast",
+                    cookTime: 10,
+                    difficulty: "Easy",
+                    ingredients: [
+                        "2 cups Greek yogurt",
+                        "1 cup mixed berries",
+                        "1/2 cup granola",
+                        "2 tablespoons honey"
+                    ],
+                    steps: [
+                        "Layer 1/4 cup of yogurt in each serving glass",
+                        "Add a layer of mixed berries",
+                        "Sprinkle granola on top",
+                        "Repeat layers until glass is full",
+                        "Drizzle with honey before serving"
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Poached Egg Toast",
+                    image: "images/dish-2.jpg",
+                    category: "Breakfast",
+                    cookTime: 15,
+                    difficulty: "Medium",
+                    ingredients: [
+                        "2 fresh eggs",
+                        "2 slices bread",
+                        "Salt and pepper to taste",
+                        "Fresh herbs for garnish"
+                    ],
+                    steps: [
+                        "Bring water to a gentle simmer in a pan",
+                        "Create a whirlpool in the water and crack egg into center",
+                        "Cook for 3 minutes",
+                        "Toast the bread until golden brown",
+                        "Place poached egg on toast and season"
+                    ]
+                }
+            ];
+            
+            recipes = fallbackRecipes;
+            displayRecipes();
+        }
+
+        // Modal functionality
+        const modal = document.getElementById('recipeModal');
+        const closeBtn = document.querySelector('.close-modal');
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // About sidebar functionality
+        const aboutLink = document.getElementById('aboutLink');
+        const homeLink = document.getElementById('homeLink');
+        const aboutSidebar = document.getElementById('aboutSidebar');
+        const closeSidebar = document.querySelector('.close-sidebar');
+
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Update active states
+            homeLink.classList.remove('active');
+            aboutLink.classList.add('active');
+        });
+
+        function closeAboutSection() {
+            aboutSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+            // Reset active states
+            aboutLink.classList.remove('active');
+            homeLink.classList.add('active');
+        }
+
+        closeSidebar.addEventListener('click', closeAboutSection);
+
+        // Close sidebar when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === aboutSidebar) {
+                closeAboutSection();
+            }
+        });
+
+        // Load recipes when page loads
+        document.addEventListener('DOMContentLoaded', fetchRecipes);
+    </script>
+    </body>
+</html>

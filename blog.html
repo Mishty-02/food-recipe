@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="images/logo.ico">
+        <title>Blog - Crave And Cook</title>
+        <style>
+            /* Blog Page Specific Styles */
+            .blog-hero {
+                background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                            url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                background-size: cover;
+                background-position: center;
+                height: 60vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: white;
+            }
+
+            .blog-hero h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            .blog-hero p {
+                font-size: 1.2rem;
+                max-width: 600px;
+                margin: 0 auto;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
+
+            .blog-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .blog-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .blog-card {
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                cursor: pointer;
+                text-decoration: none;
+                color: inherit;
+                display: block;
+            }
+
+            .blog-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            }
+
+            .blog-card-image {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .blog-card:hover .blog-card-image {
+                transform: scale(1.05);
+            }
+
+            .blog-card-content {
+                padding: 1.5rem;
+            }
+
+            .blog-card-category {
+                display: inline-block;
+                background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+                color: white;
+                padding: 0.3rem 0.8rem;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                margin-bottom: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .blog-card-title {
+                font-size: 1.4rem;
+                font-weight: 700;
+                margin-bottom: 0.8rem;
+                color: #333;
+                line-height: 1.3;
+            }
+
+            .blog-card-description {
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .blog-card-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.9rem;
+                color: #888;
+                border-top: 1px solid #eee;
+                padding-top: 1rem;
+            }
+
+            .blog-card-date {
+                display: flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            .blog-card-read-time {
+                display: flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            .blog-categories {
+                display: flex;
+                gap: 1rem;
+                margin: 2rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .category-filter {
+                padding: 0.5rem 1rem;
+                border: 2px solid #ddd;
+                border-radius: 25px;
+                background: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+
+            .category-filter:hover,
+            .category-filter.active {
+                border-color: #ff6b6b;
+                background: #ff6b6b;
+                color: white;
+            }
+
+            .blog-search {
+                max-width: 500px;
+                margin: 2rem auto;
+                position: relative;
+            }
+
+            .blog-search input {
+                width: 100%;
+                padding: 1rem 1.5rem;
+                border: 2px solid #ddd;
+                border-radius: 30px;
+                font-size: 1rem;
+                outline: none;
+                transition: border-color 0.3s ease;
+            }
+
+            .blog-search input:focus {
+                border-color: #ff6b6b;
+            }
+
+            .blog-search input::placeholder {
+                color: #999;
+            }
+
+            .blog-icon {
+                font-size: 16px;
+            }
+
+            @media (max-width: 768px) {
+                .blog-hero h1 {
+                    font-size: 2rem;
+                }
+                
+                .blog-hero p {
+                    font-size: 1rem;
+                }
+                
+                .blog-grid {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                }
+                
+                .blog-container {
+                    padding: 1rem;
+                }
+                
+                .blog-categories {
+                    gap: 0.5rem;
+                }
+                
+                .category-filter {
+                    padding: 0.4rem 0.8rem;
+                    font-size: 0.8rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <svg style="display: none;">
+        <!-- Search Icon -->
+        <symbol id="search-icon" viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </symbol>
+        
+        <!-- Home Icon -->
+        <symbol id="home-icon" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </symbol>
+        
+        <!-- Recipe Icon -->
+        <symbol id="recipe-icon" viewBox="0 0 24 24">
+            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+        </symbol>
+        
+        <!-- Blog Icon -->
+        <symbol id="blog-icon" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </symbol>
+        
+        <!-- Contact Icon -->
+        <symbol id="contact-icon" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </symbol>
+        
+        <!-- About Icon -->
+        <symbol id="about-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </symbol>
+    </svg>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Crave And Cook</h1>
+            <nav>
+                <div class="menu-icon">&#9776;</div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="index.html" class="nav-link" id="homeLink">
+                            <svg class="nav-icon"><use href="#home-icon"/></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" id="aboutLink">
+                            <svg class="nav-icon"><use href="#about-icon"/></svg>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recipe.html" class="nav-link" id="recipeLink">
+                            <svg class="nav-icon"><use href="#recipe-icon"/></svg>
+                            Recipe
+                        </a>
+                    </li>
+                    <li>
+                        <a href="blog.html" class="nav-link active" id="blogLink">
+                            <svg class="nav-icon"><use href="#blog-icon"/></svg>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html">
+                            <svg class="nav-icon"><use href="#contact-icon"/></svg>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="hero-content">
+            <h1>Our Food Blog</h1>
+            <p>Discover cooking tips, food stories, and culinary adventures from our kitchen to yours</p>
+        </div>
+    </section>
+
+    <!-- Blog Search and Categories -->
+    <div class="blog-container">
+        <div class="blog-search">
+            <input type="text" id="blogSearchInput" placeholder="Search articles...">
+        </div>
+        
+        <div class="blog-categories">
+            <button class="category-filter active" data-category="all">All Posts</button>
+            <button class="category-filter" data-category="cooking-tips">Cooking Tips</button>
+            <button class="category-filter" data-category="food-culture">Food Culture</button>
+            <button class="category-filter" data-category="healthy-eating">Healthy Eating</button>
+            <button class="category-filter" data-category="seasonal">Seasonal</button>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blogGrid">
+            <!-- Blog cards will be rendered here -->
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 Crave And Cook</p>
+        </div>
+    </footer>
+
+    <!-- About Sidebar -->
+    <div class="about-sidebar" id="aboutSidebar">
+        <div class="sidebar-content">
+            <span class="close-sidebar">&times;</span>
+            <div class="about-header">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-body">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="About Us" class="about-image">
+                <h3>Welcome to Crave And Cook</h3>
+                <p>We are passionate about bringing delicious recipes to your kitchen. Our mission is to make cooking accessible, enjoyable, and inspiring for everyone.</p>
+                
+                <h3>Our Story</h3>
+                <p>Started in 2024, Crave And Cook has become a go-to destination for food enthusiasts looking to explore new flavors and cooking techniques.</p>
+                
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Carefully curated recipes</li>
+                    <li>Step-by-step cooking instructions</li>
+                    <li>Cooking tips and tricks</li>
+                    <li>Community-driven recipe sharing</li>
+                </ul>
+                
+                <h3>Our Team</h3>
+                <p>Our team consists of passionate food lovers, experienced chefs, and dedicated content creators who work together to bring you the best culinary experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const navList = document.querySelector('.nav-list');
+
+        menuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Blog data
+        const blogPosts = [
+            {
+                id: 'essential-cooking-tips',
+                title: '10 Essential Cooking Tips Every Home Chef Should Know',
+                description: 'Master the basics of cooking with these fundamental tips that will transform your kitchen skills and elevate your dishes to restaurant quality.',
+                image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                category: 'cooking-tips',
+                date: '2024-01-15',
+                readTime: '5 min read'
+            },
+            {
+                id: 'mediterranean-diet',
+                title: 'The Mediterranean Diet: A Journey Through Healthy Eating',
+                description: 'Explore the health benefits and delicious flavors of the Mediterranean diet, featuring fresh ingredients and time-tested cooking methods.',
+                image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                category: 'healthy-eating',
+                date: '2024-01-12',
+                readTime: '7 min read'
+            },
+            {
+                id: 'indian-cuisine-culture',
+                title: 'The Rich Tapestry of Indian Cuisine: A Cultural Exploration',
+                description: 'Dive deep into the diverse world of Indian cooking, from regional specialties to the stories behind traditional spices and techniques.',
+                image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                category: 'food-culture',
+                date: '2024-01-10',
+                readTime: '8 min read'
+            },
+            {
+                id: 'seasonal-spring-recipes',
+                title: 'Spring into Cooking: Fresh Seasonal Recipes for the New Season',
+                description: 'Celebrate spring with vibrant, fresh ingredients and recipes that capture the essence of the season\'s bounty.',
+                image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80',
+                category: 'seasonal',
+                date: '2024-01-08',
+                readTime: '6 min read'
+            },
+            {
+                id: 'knife-skills-mastery',
+                title: 'Master Your Knife Skills: The Foundation of Great Cooking',
+                description: 'Learn essential knife techniques that will make your prep work faster, safer, and more professional.',
+                image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                category: 'cooking-tips',
+                date: '2024-01-05',
+                readTime: '4 min read'
+            },
+            {
+                id: 'sustainable-cooking',
+                title: 'Sustainable Cooking: Reducing Food Waste in Your Kitchen',
+                description: 'Discover practical tips and creative recipes to minimize food waste and cook more sustainably.',
+                image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80',
+                category: 'healthy-eating',
+                date: '2024-01-03',
+                readTime: '6 min read'
+            }
+        ];
+
+        // Category labels
+        const categoryLabels = {
+            'cooking-tips': 'Cooking Tips',
+            'food-culture': 'Food Culture',
+            'healthy-eating': 'Healthy Eating',
+            'seasonal': 'Seasonal'
+        };
+
+        // Render blog posts
+        function renderBlogPosts(posts = blogPosts) {
+            const blogGrid = document.getElementById('blogGrid');
+            
+            blogGrid.innerHTML = posts.map(post => `
+                <a href="blog-posts/${post.id}.html" class="blog-card">
+                    <img src="${post.image}" alt="${post.title}" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-card-category">${categoryLabels[post.category]}</span>
+                        <h2 class="blog-card-title">${post.title}</h2>
+                        <p class="blog-card-description">${post.description}</p>
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date">
+                                <span class="blog-icon">📅</span>
+                                ${formatDate(post.date)}
+                            </span>
+                            <span class="blog-card-read-time">
+                                <span class="blog-icon">⏱</span>
+                                ${post.readTime}
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            const categoryFilters = document.querySelectorAll('.category-filter');
+            categoryFilters.forEach(filter => filter.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                renderBlogPosts();
+            } else {
+                const filteredPosts = blogPosts.filter(post => post.category === category);
+                renderBlogPosts(filteredPosts);
+            }
+        }
+
+        // Search functionality
+        function searchPosts(searchTerm) {
+            const filteredPosts = blogPosts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                post.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            renderBlogPosts(filteredPosts);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBlogPosts();
+
+            // Category filter listeners
+            const categoryFilters = document.querySelectorAll('.category-filter');
+            categoryFilters.forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    const category = e.target.dataset.category;
+                    filterByCategory(category);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('blogSearchInput');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.trim();
+                if (searchTerm === '') {
+                    renderBlogPosts();
+                } else {
+                    searchPosts(searchTerm);
+                }
+            });
+        });
+
+        // About sidebar functionality
+        const aboutLink = document.getElementById('aboutLink');
+        const aboutSidebar = document.getElementById('aboutSidebar');
+        const closeSidebar = document.querySelector('.close-sidebar');
+
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeAboutSection() {
+            aboutSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeSidebar.addEventListener('click', closeAboutSection);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === aboutSidebar) {
+                closeAboutSection();
+            }
+        });
+    </script>
+    </body>
+</html> 
