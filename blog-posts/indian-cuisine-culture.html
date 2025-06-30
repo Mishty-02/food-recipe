@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="icon" type="image/x-icon" href="../images/logo.ico">
+        <title>The Rich Tapestry of Indian Cuisine: A Cultural Exploration - Crave And Cook</title>
+        <style>
+            /* Blog Post Specific Styles */
+            .blog-post-container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .blog-post-header {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .blog-post-category {
+                display: inline-block;
+                background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 25px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .blog-post-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                color: #333;
+                line-height: 1.2;
+            }
+
+            .blog-post-meta {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 2rem;
+            }
+
+            .blog-post-image {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+                border-radius: 12px;
+                margin-bottom: 2rem;
+            }
+
+            .blog-post-content {
+                line-height: 1.8;
+                color: #333;
+                font-size: 1.1rem;
+            }
+
+            .blog-post-content h2 {
+                font-size: 1.8rem;
+                font-weight: 600;
+                margin: 2rem 0 1rem 0;
+                color: #333;
+            }
+
+            .blog-post-content h3 {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin: 1.5rem 0 0.8rem 0;
+                color: #444;
+            }
+
+            .blog-post-content p {
+                margin-bottom: 1.5rem;
+            }
+
+            .blog-post-content ul, .blog-post-content ol {
+                margin-bottom: 1.5rem;
+                padding-left: 2rem;
+            }
+
+            .blog-post-content li {
+                margin-bottom: 0.5rem;
+            }
+
+            .blog-post-content blockquote {
+                background: #f8f9fa;
+                border-left: 4px solid #ff6b6b;
+                padding: 1rem 1.5rem;
+                margin: 2rem 0;
+                font-style: italic;
+                color: #555;
+            }
+
+            .back-to-blog {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                background: #ff6b6b;
+                color: white;
+                padding: 0.8rem 1.5rem;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                margin-bottom: 2rem;
+            }
+
+            .back-to-blog:hover {
+                background: #ee5a24;
+                transform: translateY(-2px);
+            }
+
+            .tip-box {
+                background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                border: 1px solid #2196f3;
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .tip-box h4 {
+                color: #1976d2;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            @media (max-width: 768px) {
+                .blog-post-container {
+                    padding: 1rem;
+                }
+                
+                .blog-post-title {
+                    font-size: 2rem;
+                }
+                
+                .blog-post-meta {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+                
+                .blog-post-image {
+                    height: 250px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <svg style="display: none;">
+        <!-- Arrow Back Icon -->
+        <symbol id="arrow-back-icon" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </symbol>
+        
+        <!-- Home Icon -->
+        <symbol id="home-icon" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </symbol>
+        
+        <!-- Recipe Icon -->
+        <symbol id="recipe-icon" viewBox="0 0 24 24">
+            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+        </symbol>
+        
+        <!-- Blog Icon -->
+        <symbol id="blog-icon" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </symbol>
+        
+        <!-- Contact Icon -->
+        <symbol id="contact-icon" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </symbol>
+        
+        <!-- About Icon -->
+        <symbol id="about-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </symbol>
+    </svg>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Crave And Cook</h1>
+            <nav>
+                <div class="menu-icon">&#9776;</div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../index.html" class="nav-link" id="homeLink">
+                            <svg class="nav-icon"><use href="#home-icon"/></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" id="aboutLink">
+                            <svg class="nav-icon"><use href="#about-icon"/></svg>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../recipe.html" class="nav-link" id="recipeLink">
+                            <svg class="nav-icon"><use href="#recipe-icon"/></svg>
+                            Recipe
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../blog.html" class="nav-link active" id="blogLink">
+                            <svg class="nav-icon"><use href="#blog-icon"/></svg>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../contact.html">
+                            <svg class="nav-icon"><use href="#contact-icon"/></svg>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="blog-post-container">
+        <a href="../blog.html" class="back-to-blog">
+            <svg width="20" height="20"><use href="#arrow-back-icon"/></svg>
+            Back to Blog
+        </a>
+
+        <article>
+            <header class="blog-post-header">
+                <span class="blog-post-category">Food Culture</span>
+                <h1 class="blog-post-title">The Rich Tapestry of Indian Cuisine: A Cultural Exploration</h1>
+                <div class="blog-post-meta">
+                    <span>📅 January 10, 2024</span>
+                    <span>⏱ 8 min read</span>
+                    <span>👨‍🍳 By Chef Priya</span>
+                </div>
+            </header>
+
+            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" 
+                 alt="Indian cuisine and spices" class="blog-post-image">
+
+            <div class="blog-post-content">
+                <p>Indian cuisine is a magnificent tapestry woven with threads of history, culture, geography, and tradition. From the snow-capped Himalayas to the tropical shores of Kerala, each region of India tells its own culinary story through unique flavors, techniques, and ingredients.</p>
+
+                <h2>The Diversity of Indian Cuisine</h2>
+                <p>India's culinary landscape is as diverse as its people, languages, and landscapes. With 28 states and 8 union territories, each region has developed its own distinct cooking style, influenced by local ingredients, climate, and cultural practices.</p>
+
+                <div class="tip-box">
+                    <h4>🌶️ Regional Diversity</h4>
+                    <p>From the fiery curries of the south to the rich Mughlai dishes of the north, Indian cuisine offers an incredible variety of flavors and cooking techniques.</p>
+                </div>
+
+                <h2>Northern Indian Cuisine</h2>
+                <p>The northern regions of India are known for their rich, creamy dishes influenced by Mughal cooking traditions. Key characteristics include:</p>
+                
+                <h3>Signature Dishes</h3>
+                <ul>
+                    <li><strong>Butter Chicken:</strong> Tender chicken in a rich tomato-based gravy</li>
+                    <li><strong>Biryani:</strong> Fragrant rice dish with meat and aromatic spices</li>
+                    <li><strong>Naan:</strong> Soft, fluffy flatbread cooked in a tandoor</li>
+                    <li><strong>Dal Makhani:</strong> Creamy black lentils slow-cooked overnight</li>
+                </ul>
+
+                <h3>Cooking Techniques</h3>
+                <p>Northern Indian cooking emphasizes:</p>
+                <ul>
+                    <li>Tandoor cooking (clay oven)</li>
+                    <li>Slow cooking and braising</li>
+                    <li>Rich gravies with cream and butter</li>
+                    <li>Bread-making traditions</li>
+                </ul>
+
+                <h2>Southern Indian Cuisine</h2>
+                <p>The southern states are famous for their rice-based dishes, coconut, and tangy flavors. The cuisine is characterized by:</p>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Rice:</strong> The staple grain in most meals</li>
+                    <li><strong>Coconut:</strong> Used extensively in curries and chutneys</li>
+                    <li><strong>Tampering:</strong> Spice-infused oil added at the end</li>
+                    <li><strong>Fermented foods:</strong> Idli, dosa, and pickles</li>
+                </ul>
+
+                <blockquote>
+                    "Indian cuisine is not just about spices—it's about the harmony of flavors, the balance of textures, and the celebration of seasonal ingredients." — Indian Culinary Expert
+                </blockquote>
+
+                <h2>The Art of Spice Blending</h2>
+                <p>Spices are the heart and soul of Indian cooking, and understanding their role is crucial to mastering Indian cuisine.</p>
+                
+                <h3>Essential Spices</h3>
+                <ul>
+                    <li><strong>Cumin:</strong> Earthy, warm flavor used in tempering</li>
+                    <li><strong>Coriander:</strong> Fresh, citrusy notes in curries</li>
+                    <li><strong>Turmeric:</strong> Golden color and anti-inflammatory properties</li>
+                    <li><strong>Cardamom:</strong> Sweet, aromatic spice for desserts and rice</li>
+                    <li><strong>Ginger-Garlic:</strong> The foundation of most Indian dishes</li>
+                </ul>
+
+                <h3>Spice Combinations</h3>
+                <p>Traditional spice blends include:</p>
+                <ul>
+                    <li><strong>Garam Masala:</strong> Warming spices for rich dishes</li>
+                    <li><strong>Chaat Masala:</strong> Tangy blend for street food</li>
+                    <li><strong>Panch Phoron:</strong> Five-spice blend from Bengal</li>
+                    <li><strong>Rasam Powder:</strong> Spicy blend for South Indian soups</li>
+                </ul>
+
+                <h2>Vegetarian Traditions</h2>
+                <p>India has one of the world's richest vegetarian culinary traditions, with many regions specializing in plant-based cooking.</p>
+                
+                <h3>Popular Vegetarian Dishes</h3>
+                <ul>
+                    <li><strong>Paneer Dishes:</strong> Fresh cheese in various preparations</li>
+                    <li><strong>Dal Varieties:</strong> Lentil dishes from different regions</li>
+                    <li><strong>Vegetable Curries:</strong> Seasonal vegetables with spices</li>
+                    <li><strong>Bread Varieties:</strong> Roti, paratha, and puri</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h4>🥬 Vegetarian Excellence</h4>
+                    <p>Indian vegetarian cuisine is so diverse and flavorful that many people don't miss meat when enjoying traditional vegetarian meals.</p>
+                </div>
+
+                <h2>Street Food Culture</h2>
+                <p>Indian street food is a vibrant expression of local flavors and culinary creativity. Each region has its own street food specialties.</p>
+                
+                <h3>Popular Street Foods</h3>
+                <ul>
+                    <li><strong>Pani Puri:</strong> Crispy shells filled with spiced water</li>
+                    <li><strong>Vada Pav:</strong> Mumbai's answer to the burger</li>
+                    <li><strong>Dosa:</strong> Crispy rice crepes with various fillings</li>
+                    <li><strong>Chaat:</strong> Sweet and savory snack combinations</li>
+                </ul>
+
+                <h2>Festival and Celebration Foods</h2>
+                <p>Indian festivals are incomplete without their traditional foods, each carrying deep cultural significance.</p>
+                
+                <h3>Festival Specialties</h3>
+                <ul>
+                    <li><strong>Diwali:</strong> Sweets like ladoo, barfi, and jalebi</li>
+                    <li><strong>Holi:</strong> Thandai and gujiya</li>
+                    <li><strong>Eid:</strong> Biryani and sheer khurma</li>
+                    <li><strong>Christmas:</strong> Plum cake and vindaloo</li>
+                </ul>
+
+                <h2>Modern Indian Cuisine</h2>
+                <p>Contemporary Indian chefs are reimagining traditional dishes while preserving their essence and cultural significance.</p>
+                
+                <h3>Fusion Trends</h3>
+                <ul>
+                    <li>Indian ingredients in Western dishes</li>
+                    <li>Molecular gastronomy with Indian flavors</li>
+                    <li>Health-conscious adaptations</li>
+                    <li>Plant-based innovations</li>
+                </ul>
+
+                <h2>Cooking Indian Food at Home</h2>
+                <p>Bringing Indian flavors to your kitchen is easier than you might think. Here are some tips to get started:</p>
+                
+                <h3>Essential Equipment</h3>
+                <ul>
+                    <li>Heavy-bottomed pan for tempering</li>
+                    <li>Spice grinder or mortar and pestle</li>
+                    <li>Pressure cooker for dals</li>
+                    <li>Good quality knives</li>
+                </ul>
+
+                <h3>Basic Techniques to Master</h3>
+                <ol>
+                    <li><strong>Tempering (Tadka):</strong> Heating spices in oil to release flavors</li>
+                    <li><strong>Onion-Tomato Base:</strong> Foundation for many curries</li>
+                    <li><strong>Spice Roasting:</strong> Dry roasting spices for enhanced flavor</li>
+                    <li><strong>Gravy Making:</strong> Creating rich, flavorful sauces</li>
+                </ol>
+
+                <h2>Conclusion</h2>
+                <p>Indian cuisine is a living, breathing tradition that continues to evolve while staying rooted in its rich cultural heritage. Whether you're exploring the fiery curries of the south, the rich Mughlai dishes of the north, or the simple comfort foods of home cooking, Indian cuisine offers endless possibilities for culinary exploration.</p>
+
+                <p>The key to enjoying Indian food is to approach it with an open mind and a willingness to experiment. Start with simple dishes, gradually build your spice collection, and most importantly, enjoy the process of learning about this incredible culinary tradition.</p>
+
+                <p>What aspect of Indian cuisine interests you most? Share your favorite Indian dishes or cooking experiences in the comments below!</p>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 Crave And Cook</p>
+        </div>
+    </footer>
+
+    <!-- About Sidebar -->
+    <div class="about-sidebar" id="aboutSidebar">
+        <div class="sidebar-content">
+            <span class="close-sidebar">&times;</span>
+            <div class="about-header">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-body">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="About Us" class="about-image">
+                <h3>Welcome to Crave And Cook</h3>
+                <p>We are passionate about bringing delicious recipes to your kitchen. Our mission is to make cooking accessible, enjoyable, and inspiring for everyone.</p>
+                
+                <h3>Our Story</h3>
+                <p>Started in 2024, Crave And Cook has become a go-to destination for food enthusiasts looking to explore new flavors and cooking techniques.</p>
+                
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Carefully curated recipes</li>
+                    <li>Step-by-step cooking instructions</li>
+                    <li>Cooking tips and tricks</li>
+                    <li>Community-driven recipe sharing</li>
+                </ul>
+                
+                <h3>Our Team</h3>
+                <p>Our team consists of passionate food lovers, experienced chefs, and dedicated content creators who work together to bring you the best culinary experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const navList = document.querySelector('.nav-list');
+
+        menuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // About sidebar functionality
+        const aboutLink = document.getElementById('aboutLink');
+        const aboutSidebar = document.getElementById('aboutSidebar');
+        const closeSidebar = document.querySelector('.close-sidebar');
+
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeAboutSection() {
+            aboutSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeSidebar.addEventListener('click', closeAboutSection);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === aboutSidebar) {
+                closeAboutSection();
+            }
+        });
+    </script>
+    </body>
+</html> 

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="icon" type="image/x-icon" href="../images/logo.ico">
+        <title>Sustainable Cooking: Reducing Waste and Cooking with Purpose - Crave And Cook</title>
+        <style>
+            /* Blog Post Specific Styles */
+            .blog-post-container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .blog-post-header {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .blog-post-category {
+                display: inline-block;
+                background: linear-gradient(135deg, #4caf50, #2e7d32);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 25px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .blog-post-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                color: #333;
+                line-height: 1.2;
+            }
+
+            .blog-post-meta {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 2rem;
+            }
+
+            .blog-post-image {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+                border-radius: 12px;
+                margin-bottom: 2rem;
+            }
+
+            .blog-post-content {
+                line-height: 1.8;
+                color: #333;
+                font-size: 1.1rem;
+            }
+
+            .blog-post-content h2 {
+                font-size: 1.8rem;
+                font-weight: 600;
+                margin: 2rem 0 1rem 0;
+                color: #333;
+            }
+
+            .blog-post-content h3 {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin: 1.5rem 0 0.8rem 0;
+                color: #444;
+            }
+
+            .blog-post-content p {
+                margin-bottom: 1.5rem;
+            }
+
+            .blog-post-content ul, .blog-post-content ol {
+                margin-bottom: 1.5rem;
+                padding-left: 2rem;
+            }
+
+            .blog-post-content li {
+                margin-bottom: 0.5rem;
+            }
+
+            .blog-post-content blockquote {
+                background: #f8f9fa;
+                border-left: 4px solid #4caf50;
+                padding: 1rem 1.5rem;
+                margin: 2rem 0;
+                font-style: italic;
+                color: #555;
+            }
+
+            .back-to-blog {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                background: #ff6b6b;
+                color: white;
+                padding: 0.8rem 1.5rem;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                margin-bottom: 2rem;
+            }
+
+            .back-to-blog:hover {
+                background: #ee5a24;
+                transform: translateY(-2px);
+            }
+
+            .tip-box {
+                background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+                border: 1px solid #4caf50;
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .tip-box h4 {
+                color: #2e7d32;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            @media (max-width: 768px) {
+                .blog-post-container {
+                    padding: 1rem;
+                }
+                
+                .blog-post-title {
+                    font-size: 2rem;
+                }
+                
+                .blog-post-meta {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+                
+                .blog-post-image {
+                    height: 250px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <svg style="display: none;">
+        <!-- Arrow Back Icon -->
+        <symbol id="arrow-back-icon" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </symbol>
+        
+        <!-- Home Icon -->
+        <symbol id="home-icon" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </symbol>
+        
+        <!-- Recipe Icon -->
+        <symbol id="recipe-icon" viewBox="0 0 24 24">
+            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+        </symbol>
+        
+        <!-- Blog Icon -->
+        <symbol id="blog-icon" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </symbol>
+        
+        <!-- Contact Icon -->
+        <symbol id="contact-icon" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </symbol>
+        
+        <!-- About Icon -->
+        <symbol id="about-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </symbol>
+    </svg>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Crave And Cook</h1>
+            <nav>
+                <div class="menu-icon">&#9776;</div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../index.html" class="nav-link" id="homeLink">
+                            <svg class="nav-icon"><use href="#home-icon"/></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" id="aboutLink">
+                            <svg class="nav-icon"><use href="#about-icon"/></svg>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../recipe.html" class="nav-link" id="recipeLink">
+                            <svg class="nav-icon"><use href="#recipe-icon"/></svg>
+                            Recipe
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../blog.html" class="nav-link active" id="blogLink">
+                            <svg class="nav-icon"><use href="#blog-icon"/></svg>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../contact.html">
+                            <svg class="nav-icon"><use href="#contact-icon"/></svg>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="blog-post-container">
+        <a href="../blog.html" class="back-to-blog">
+            <svg width="20" height="20"><use href="#arrow-back-icon"/></svg>
+            Back to Blog
+        </a>
+
+        <article>
+            <header class="blog-post-header">
+                <span class="blog-post-category">Healthy Eating</span>
+                <h1 class="blog-post-title">Sustainable Cooking: Reducing Waste and Cooking with Purpose</h1>
+                <div class="blog-post-meta">
+                    <span>📅 January 8, 2024</span>
+                    <span>⏱ 5 min read</span>
+                    <span>🌱 By Chef Sarah</span>
+                </div>
+            </header>
+
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80" 
+                 alt="Sustainable cooking with fresh vegetables and zero waste" class="blog-post-image">
+
+            <div class="blog-post-content">
+                <p>In today's world, sustainable cooking isn't just a trend—it's a necessity. As we become more aware of our environmental impact, learning to cook sustainably can make a significant difference. From reducing food waste to choosing eco-friendly ingredients, sustainable cooking is about making conscious choices that benefit both our planet and our health.</p>
+
+                <h2>What is Sustainable Cooking?</h2>
+                <p>Sustainable cooking encompasses practices that minimize environmental impact while maximizing nutritional value and flavor. It's about being mindful of where our food comes from, how it's produced, and how we use every part of it.</p>
+
+                <div class="tip-box">
+                    <h4>🌍 Environmental Impact</h4>
+                    <p>Food waste contributes to 8% of global greenhouse gas emissions. By practicing sustainable cooking, we can significantly reduce our carbon footprint while saving money and eating better.</p>
+                </div>
+
+                <h2>Planning for Zero Waste</h2>
+                
+                <h3>1. Smart Meal Planning</h3>
+                <p>Start by planning your meals for the week. This helps you buy only what you need and use ingredients efficiently across multiple dishes.</p>
+                
+                <h3>2. Shopping with Purpose</h3>
+                <p>Make a detailed shopping list and stick to it. Avoid impulse purchases that might go to waste. Consider buying in bulk for staples you use frequently.</p>
+                
+                <h3>3. Understanding Expiration Dates</h3>
+                <p>Learn the difference between "best by," "sell by," and "use by" dates. Many foods are perfectly safe to eat beyond their "best by" date.</p>
+
+                <blockquote>
+                    "The best way to reduce food waste is to plan your meals and use every part of the ingredients you buy." — Sustainable Chef
+                </blockquote>
+
+                <h2>Using Every Part of Your Ingredients</h2>
+                
+                <h3>Vegetable Scraps</h3>
+                <p>Don't throw away vegetable peels, stems, and ends. These can be used to make flavorful vegetable stock, which forms the base for soups, stews, and risottos.</p>
+                
+                <h3>Herb Stems</h3>
+                <p>Herb stems often contain as much flavor as the leaves. Use them in stocks, marinades, or finely chop them into dishes for extra flavor.</p>
+                
+                <h3>Citrus Peels</h3>
+                <p>Citrus peels can be candied, used to make infused oils, or dried and ground into powder for seasoning.</p>
+                
+                <h3>Bread Ends</h3>
+                <p>Stale bread can be turned into breadcrumbs, croutons, or bread pudding. Even the crusts can be used in recipes.</p>
+
+                <h2>Seasonal and Local Shopping</h2>
+                
+                <h3>Benefits of Seasonal Eating</h3>
+                <ul>
+                    <li>Better flavor and nutritional value</li>
+                    <li>Lower environmental impact</li>
+                    <li>Support for local farmers</li>
+                    <li>More affordable prices</li>
+                    <li>Reduced transportation emissions</li>
+                </ul>
+                
+                <h3>Finding Local Sources</h3>
+                <p>Visit farmers' markets, join a CSA (Community Supported Agriculture), or shop at stores that prioritize local produce. This ensures you're getting the freshest ingredients while supporting your local economy.</p>
+
+                <div class="tip-box">
+                    <h4>🛒 Shopping Smart</h4>
+                    <p>Buy seasonal produce in bulk when it's at its peak and preserve it through freezing, canning, or pickling. This ensures you have access to local flavors year-round.</p>
+                </div>
+
+                <h2>Eco-Friendly Kitchen Practices</h2>
+                
+                <h3>Energy-Efficient Cooking</h3>
+                <p>Use the right size pot for your burner, keep lids on pots to retain heat, and consider using pressure cookers or slow cookers for energy-efficient meal preparation.</p>
+                
+                <h3>Water Conservation</h3>
+                <p>Wash vegetables in a bowl of water rather than under running water. Use the leftover water for your plants or to pre-soak dishes.</p>
+                
+                <h3>Proper Storage</h3>
+                <p>Store food properly to extend its shelf life. Use airtight containers, keep produce in the right humidity settings, and freeze items you won't use immediately.</p>
+
+                <h2>Composting Kitchen Waste</h2>
+                <p>Even with the best planning, some food waste is inevitable. Composting turns this waste into nutrient-rich soil for your garden.</p>
+                
+                <h3>What to Compost</h3>
+                <ul>
+                    <li>Fruit and vegetable scraps</li>
+                    <li>Eggshells</li>
+                    <li>Coffee grounds and filters</li>
+                    <li>Tea bags</li>
+                    <li>Nut shells</li>
+                    <li>Paper towels and napkins</li>
+                </ul>
+                
+                <h3>What Not to Compost</h3>
+                <ul>
+                    <li>Meat and dairy products</li>
+                    <li>Oily foods</li>
+                    <li>Diseased plants</li>
+                    <li>Pet waste</li>
+                </ul>
+
+                <h2>Sustainable Recipe Ideas</h2>
+                
+                <h3>1. Root-to-Stem Cooking</h3>
+                <p>Use every part of vegetables in your dishes. For example, beet greens can be sautéed, carrot tops can be made into pesto, and broccoli stems can be sliced and stir-fried.</p>
+                
+                <h3>2. Leftover Transformations</h3>
+                <p>Turn leftover rice into fried rice, stale bread into bread pudding, and leftover vegetables into frittatas or soups.</p>
+                
+                <h3>3. Batch Cooking</h3>
+                <p>Cook large batches of grains, beans, and proteins that can be used throughout the week in different dishes.</p>
+
+                <h2>Choosing Sustainable Ingredients</h2>
+                
+                <h3>Organic vs. Conventional</h3>
+                <p>While organic produce is often more expensive, it's grown without synthetic pesticides and fertilizers. Consider the "Dirty Dozen" and "Clean Fifteen" lists to prioritize which foods to buy organic.</p>
+                
+                <h3>Plant-Based Proteins</h3>
+                <p>Incorporating more plant-based proteins like beans, lentils, and tofu can reduce your environmental impact while providing excellent nutrition.</p>
+                
+                <h3>Sustainable Seafood</h3>
+                <p>Choose seafood that's sustainably caught or farmed. Look for certifications like MSC (Marine Stewardship Council) or ASC (Aquaculture Stewardship Council).</p>
+
+                <h2>Reducing Packaging Waste</h2>
+                
+                <h3>Bulk Shopping</h3>
+                <p>Buy staples like grains, beans, nuts, and spices in bulk using your own containers. This reduces packaging waste and often saves money.</p>
+                
+                <h3>Reusable Containers</h3>
+                <p>Invest in reusable containers for storing leftovers and packing lunches. Glass containers are durable and don't leach chemicals like some plastics.</p>
+                
+                <h3>Minimal Packaging</h3>
+                <p>Choose products with minimal or recyclable packaging. Avoid individually wrapped items when possible.</p>
+
+                <h2>Community and Sharing</h2>
+                <p>Sustainable cooking isn't just about individual actions—it's about building community and sharing resources.</p>
+                
+                <h3>Food Sharing</h3>
+                <p>Share excess produce with neighbors, participate in food swaps, or donate to local food banks. This reduces waste while building community connections.</p>
+                
+                <h3>Learning Together</h3>
+                <p>Join cooking classes, participate in community gardens, or start a cooking club focused on sustainable practices. Learning together makes the journey more enjoyable and effective.</p>
+
+                <h2>Measuring Your Impact</h2>
+                <p>Track your progress in reducing food waste and making sustainable choices:</p>
+                
+                <h3>Waste Audit</h3>
+                <p>Keep track of what you throw away for a week. This will help you identify patterns and areas for improvement.</p>
+                
+                <h3>Cost Savings</h3>
+                <p>Monitor how much money you save by reducing waste and buying in bulk. Sustainable cooking often leads to significant cost savings.</p>
+                
+                <h3>Environmental Impact</h3>
+                <p>Use online calculators to estimate your carbon footprint reduction from sustainable cooking practices.</p>
+
+                <h2>Challenges and Solutions</h2>
+                
+                <h3>Time Constraints</h3>
+                <p>Sustainable cooking can take more time initially, but planning and batch cooking can make it more efficient in the long run.</p>
+                
+                <h3>Cost Concerns</h3>
+                <p>While some sustainable options cost more, the overall savings from reduced waste often offset these costs. Start with small changes and build gradually.</p>
+                
+                <h3>Limited Access</h3>
+                <p>If you don't have access to farmers' markets or bulk stores, focus on reducing waste and making the most sustainable choices available to you.</p>
+
+                <h2>Conclusion</h2>
+                <p>Sustainable cooking is a journey, not a destination. Every small change you make contributes to a larger positive impact on our planet. Start with one or two practices that feel manageable and gradually incorporate more sustainable habits into your cooking routine.</p>
+
+                <p>Remember, sustainable cooking isn't about perfection—it's about making conscious choices that align with your values and capabilities. Every meal is an opportunity to practice sustainability and make a difference.</p>
+
+                <p>What sustainable cooking practices have you already adopted? Share your experiences and tips in the comments below, and let's inspire each other to cook more sustainably!</p>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 Crave And Cook</p>
+        </div>
+    </footer>
+
+    <!-- About Sidebar -->
+    <div class="about-sidebar" id="aboutSidebar">
+        <div class="sidebar-content">
+            <span class="close-sidebar">&times;</span>
+            <div class="about-header">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-body">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="About Us" class="about-image">
+                <h3>Welcome to Crave And Cook</h3>
+                <p>We are passionate about bringing delicious recipes to your kitchen. Our mission is to make cooking accessible, enjoyable, and inspiring for everyone.</p>
+                
+                <h3>Our Story</h3>
+                <p>Started in 2024, Crave And Cook has become a go-to destination for food enthusiasts looking to explore new flavors and cooking techniques.</p>
+                
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Carefully curated recipes</li>
+                    <li>Step-by-step cooking instructions</li>
+                    <li>Cooking tips and tricks</li>
+                    <li>Community-driven recipe sharing</li>
+                </ul>
+                
+                <h3>Our Team</h3>
+                <p>Our team consists of passionate food lovers, experienced chefs, and dedicated content creators who work together to bring you the best culinary experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const navList = document.querySelector('.nav-list');
+
+        menuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // About sidebar functionality
+        const aboutLink = document.getElementById('aboutLink');
+        const aboutSidebar = document.getElementById('aboutSidebar');
+        const closeSidebar = document.querySelector('.close-sidebar');
+
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeAboutSection() {
+            aboutSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeSidebar.addEventListener('click', closeAboutSection);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === aboutSidebar) {
+                closeAboutSection();
+            }
+        });
+    </script>
+    </body>
+</html> 
